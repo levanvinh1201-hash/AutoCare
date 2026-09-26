@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FB">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:padding="24dp"
+            android:background="#1565C0">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📅"
+                android:textSize="38sp"
+                android:layout_marginBottom="6dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đặt lịch sửa xe"
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đặt lịch nhanh chóng và thuận tiện"
+                android:textColor="#DCEBFF"
+                android:textSize="15sp"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+
+        <!-- NỘI DUNG -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+
+            <!-- CHỌN XE -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Xe cần sửa chữa"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#374151"
+                android:layout_marginBottom="7dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerXe"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="#FFFFFF"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:layout_marginBottom="18dp"/>
+
+
+            <!-- CHỌN DỊCH VỤ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dịch vụ"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#374151"
+                android:layout_marginBottom="7dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerDichVu"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="#FFFFFF"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:layout_marginBottom="18dp"/>
+
+
+            <!-- NGÀY -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ngày hẹn"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#374151"
+                android:layout_marginBottom="7dp"/>
+
+            <Button
+                android:id="@+id/btnChonNgay"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="📅  Chọn ngày"
+                android:textSize="15sp"
+                android:textColor="#374151"
+                android:backgroundTint="#FFFFFF"
+                android:layout_marginBottom="18dp"/>
+
+
+            <!-- GIỜ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giờ hẹn"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#374151"
+                android:layout_marginBottom="7dp"/>
+
+            <Button
+                android:id="@+id/btnChonGio"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="🕐  Chọn giờ"
+                android:textSize="15sp"
+                android:textColor="#374151"
+                android:backgroundTint="#FFFFFF"
+                android:layout_marginBottom="18dp"/>
+
+
+            <!-- GHI CHÚ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ghi chú"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#374151"
+                android:layout_marginBottom="7dp"/>
+
+            <EditText
+                android:id="@+id/edtGhiChu"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:hint="Mô tả tình trạng xe hoặc yêu cầu khác..."
+                android:gravity="top"
+                android:padding="14dp"
+                android:textSize="15sp"
+                android:inputType="textMultiLine"
+                android:background="#FFFFFF"
+                android:layout_marginBottom="22dp"/>
+
+
+            <!-- NÚT XÁC NHẬN -->
+            <Button
+                android:id="@+id/btnXacNhanDatLich"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:text="✓  Xác nhận đặt lịch"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1565C0"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

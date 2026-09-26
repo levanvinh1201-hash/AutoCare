@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F4F7FB">
+
+    <!-- ================= HEADER ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="24dp"
+        android:background="#1565C0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔧"
+            android:textSize="38sp"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quản lý Gara"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quản lý lịch sửa chữa và bảo dưỡng"
+            android:textColor="#DCEBFF"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
+
+
+    <!-- ================= NỘI DUNG ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chức năng quản lý"
+            android:textColor="#1F2937"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+
+        <!-- QUẢN LÝ LỊCH -->
+
+        <Button
+            android:id="@+id/btnQuanLyLich"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="📋  Quản lý lịch đặt"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#1565C0"/>
+
+
+        <!-- QUẢN LÝ DỊCH VỤ -->
+
+        <Button
+            android:id="@+id/btnQuanLyDichVu"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="14dp"
+            android:text="🔧  Quản lý dịch vụ"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#1976D2"/>
+        <Button
+            android:id="@+id/btnQuanLyTaiKhoan"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="14dp"
+            android:text="👥  Quản lý Tài Khoản"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#1976D2"/>
+
+
+        <!-- ĐĂNG XUẤT -->
+
+        <Button
+            android:id="@+id/btnAdminDangXuat"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:text="Đăng xuất"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#DC2626"
+            android:backgroundTint="#FEE2E2"/>
+
+    </LinearLayout>
+
+</LinearLayout>
