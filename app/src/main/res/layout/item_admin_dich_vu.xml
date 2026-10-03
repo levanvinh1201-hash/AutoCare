@@ -16,50 +16,74 @@
         android:orientation="vertical"
         android:padding="18dp">
 
-        <!-- HỌ TÊN -->
-
+        <!-- TÊN DỊCH VỤ -->
         <TextView
-            android:id="@+id/txtAdminHoTen"
+            android:id="@+id/txtAdminTenDichVu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nguyễn Văn A"
+            android:text="Thay dầu nhớt"
             android:textColor="#1F2937"
             android:textSize="18sp"
             android:textStyle="bold"/>
 
-
-        <!-- EMAIL -->
-
+        <!-- MÃ DỊCH VỤ -->
         <TextView
-            android:id="@+id/txtAdminEmail"
+            android:id="@+id/txtAdminMaDichVu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="example@gmail.com"
+            android:text="Mã dịch vụ: dv01"
+            android:textColor="#6B7280"
+            android:textSize="13sp"
+            android:layout_marginTop="6dp"/>
+
+        <!-- GIÁ -->
+        <TextView
+            android:id="@+id/txtAdminGiaDichVu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giá: 200.000 VNĐ"
+            android:textColor="#1565C0"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
+        <!-- THỜI GIAN -->
+        <TextView
+            android:id="@+id/txtAdminThoiGianDichVu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thời gian: 30 phút"
+            android:textColor="#4B5563"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"/>
+
+        <!-- MÔ TẢ -->
+        <TextView
+            android:id="@+id/txtAdminMoTaDichVu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thay dầu nhớt định kỳ cho xe."
             android:textColor="#6B7280"
             android:textSize="14sp"
             android:layout_marginTop="6dp"/>
 
-
-        <!-- VAI TRÒ -->
-
+        <!-- TRẠNG THÁI -->
         <TextView
-            android:id="@+id/txtAdminRole"
+            android:id="@+id/txtAdminHoatDongDichVu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CUSTOMER"
-            android:textColor="#1565C0"
+            android:text="ĐANG HOẠT ĐỘNG"
+            android:textColor="#2E7D32"
             android:textSize="13sp"
             android:textStyle="bold"
-            android:background="#E3F2FD"
+            android:background="#E8F5E9"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:layout_marginTop="12dp"/>
 
-
-        <!-- NÚT SỬA / XÓA -->
-
+        <!-- NÚT -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,18 +92,18 @@
             android:layout_marginTop="16dp">
 
             <Button
-                android:id="@+id/btnSuaTaiKhoan"
+                android:id="@+id/btnSuaDichVu"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:text="Sửa"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#CDDC39"
+                android:backgroundTint="#1565C0"
                 android:layout_marginEnd="8dp"/>
 
             <Button
-                android:id="@+id/btnXoaTaiKhoan"
+                android:id="@+id/btnXoaDichVu"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:text="Xóa"
@@ -87,15 +111,6 @@
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#D32F2F"/>
-            <Button
-                android:id="@+id/btnThemTaiKhoan"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:text="thêm"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#2196F3"/>
 
         </LinearLayout>
 

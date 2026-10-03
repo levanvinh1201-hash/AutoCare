@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Tên dịch vụ -->
+        <EditText
+            android:id="@+id/edtTenDichVu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên dịch vụ"
+            android:inputType="text"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Mã dịch vụ -->
+        <EditText
+            android:id="@+id/edtMaDichVu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mã dịch vụ"
+            android:inputType="text"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Giá tiền -->
+        <EditText
+            android:id="@+id/edtGiaTien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Giá tiền"
+            android:inputType="number"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Thời gian -->
+        <EditText
+            android:id="@+id/edtThoiGian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Thời gian"
+            android:inputType="text"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Mô tả -->
+        <EditText
+            android:id="@+id/edtMoTa"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Mô tả dịch vụ"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Hoạt động -->
+        <CheckBox
+            android:id="@+id/cbHoatDong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đang hoạt động"
+            android:checked="true"
+            android:layout_marginBottom="8dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

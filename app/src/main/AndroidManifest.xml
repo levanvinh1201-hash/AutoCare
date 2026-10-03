@@ -53,11 +53,15 @@
             android:name=".ChiTietLich"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".admin.AdminQuanLyTaiKhoan" />
-
+        <activity android:name=".admin.AdminQuanLyTaiKhoan" />
         <activity android:name=".admin.AdminTrangChu" />
-
+        <activity
+            android:name=".admin.AdminQuanLyLich"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".admin.AdminQuanLyDichVu"
+            android:exported="false" />
     </application>
 
 </manifest>

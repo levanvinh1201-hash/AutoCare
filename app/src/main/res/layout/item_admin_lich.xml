@@ -16,41 +16,89 @@
         android:orientation="vertical"
         android:padding="18dp">
 
-        <!-- HỌ TÊN -->
+        <!-- DỊCH VỤ -->
 
         <TextView
-            android:id="@+id/txtAdminHoTen"
+            android:id="@+id/txtAdminTenDichVu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nguyễn Văn A"
+            android:text="Thay dầu nhớt"
             android:textColor="#1F2937"
             android:textSize="18sp"
             android:textStyle="bold"/>
 
 
-        <!-- EMAIL -->
+        <!-- KHÁCH HÀNG -->
 
         <TextView
-            android:id="@+id/txtAdminEmail"
+            android:id="@+id/txtAdminKhachHang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="example@gmail.com"
+            android:text="Khách hàng: Nguyễn Văn A"
+            android:textColor="#4B5563"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"/>
+
+
+        <!-- XE -->
+
+        <TextView
+            android:id="@+id/txtAdminXe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xe: Honda Wave - 99A1-12345"
+            android:textColor="#4B5563"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"/>
+
+
+        <!-- NGÀY -->
+
+        <TextView
+            android:id="@+id/txtAdminNgay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📅 Ngày: 24/9/2026"
+            android:textColor="#4B5563"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"/>
+
+
+        <!-- GIỜ -->
+
+        <TextView
+            android:id="@+id/txtAdminGio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🕐 Giờ: 18:45"
+            android:textColor="#4B5563"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"/>
+
+
+        <!-- GHI CHÚ -->
+
+        <TextView
+            android:id="@+id/txtAdminGhiChu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ghi chú: Thay lốp"
             android:textColor="#6B7280"
             android:textSize="14sp"
             android:layout_marginTop="6dp"/>
 
 
-        <!-- VAI TRÒ -->
+        <!-- TRẠNG THÁI -->
 
         <TextView
-            android:id="@+id/txtAdminRole"
+            android:id="@+id/txtAdminTrangThai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CUSTOMER"
-            android:textColor="#1565C0"
+            android:text="CHỜ XÁC NHẬN"
+            android:textColor="#F57C00"
             android:textSize="13sp"
             android:textStyle="bold"
-            android:background="#E3F2FD"
+            android:background="#FFF3E0"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:paddingTop="6dp"
@@ -58,7 +106,7 @@
             android:layout_marginTop="12dp"/>
 
 
-        <!-- NÚT SỬA / XÓA -->
+        <!-- CÁC NÚT XỬ LÝ -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,34 +116,25 @@
             android:layout_marginTop="16dp">
 
             <Button
-                android:id="@+id/btnSuaTaiKhoan"
+                android:id="@+id/btnXacNhanLich"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
-                android:text="Sửa"
+                android:text="Xác nhận"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#CDDC39"
+                android:backgroundTint="#1565C0"
                 android:layout_marginEnd="8dp"/>
 
             <Button
-                android:id="@+id/btnXoaTaiKhoan"
+                android:id="@+id/btnCapNhatTrangThai"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
-                android:text="Xóa"
+                android:text="Cập nhật"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#D32F2F"/>
-            <Button
-                android:id="@+id/btnThemTaiKhoan"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:text="thêm"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#2196F3"/>
+                android:backgroundTint="#2E7D32"/>
 
         </LinearLayout>
 
