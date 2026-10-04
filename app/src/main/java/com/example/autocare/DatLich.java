@@ -1,12 +1,13 @@
 package com.example.autocare;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
-import android.app.DatePickerDialog;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,13 +15,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DatLich extends AppCompatActivity {
 
-    Spinner spinnerXe, spinnerDichVu;
+    Spinner spinnerXe;
+    Spinner spinnerDichVu;
+
     Button btnChonNgay;
     Button btnChonGio;
+
     EditText edtGhiChu;
+
     Button btnXacNhanDatLich;
 
     FirebaseAuth firebaseAuth;
@@ -28,87 +36,176 @@ public class DatLich extends AppCompatActivity {
 
     ArrayList<String> danhSachXe;
     ArrayList<String> danhSachDichVu;
+
     ArrayList<String> danhSachMaXe;
     ArrayList<String> danhSachMaDichVu;
 
     ArrayAdapter<String> adapterXe;
     ArrayAdapter<String> adapterDichVu;
 
+    // Mã dịch vụ truyền từ TrangChu
+    String maDichVuDuocChon = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_dat_lich);
-
-        // Ánh xạ Spinner
-        spinnerXe = findViewById(R.id.spinnerXe);
-        spinnerDichVu = findViewById(R.id.spinnerDichVu);
-
-        // Firebase
-        firebaseAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
-
-        // Tạo danh sách
-        danhSachXe = new ArrayList<>();
-        danhSachDichVu = new ArrayList<>();
-        danhSachMaXe = new ArrayList<>();
-        danhSachMaDichVu = new ArrayList<>();
-
-        // Ánh xạ các nút
-        btnChonNgay = findViewById(R.id.btnChonNgay);
-        btnChonGio = findViewById(R.id.btnChonGio);
-        edtGhiChu = findViewById(R.id.edtGhiChu);
-        btnXacNhanDatLich = findViewById(R.id.btnXacNhanDatLich);
-
-        // Sự kiện chọn ngày
-        btnChonNgay.setOnClickListener(v -> chonNgay());
-
-        // Sự kiện chọn giờ
-        btnChonGio.setOnClickListener(v -> chonGio());
-
-        // Sự kiện xác nhận đặt lịch
-        btnXacNhanDatLich.setOnClickListener(v -> luuLichDat());
-
-        // Adapter xe
-        adapterXe = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_dropdown_item,
-                danhSachXe
+        setContentView(
+                R.layout.activity_dat_lich
         );
 
-        spinnerXe.setAdapter(adapterXe);
+        // =====================================================
+        // NHẬN MÃ DỊCH VỤ TỪ TRANG CHỦ
+        // =====================================================
 
-        // Adapter dịch vụ
-        adapterDichVu = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_dropdown_item,
-                danhSachDichVu
+        maDichVuDuocChon =
+                getIntent().getStringExtra(
+                        "maDichVu"
+                );
+
+        // =====================================================
+        // ÁNH XẠ
+        // =====================================================
+
+        spinnerXe =
+                findViewById(
+                        R.id.spinnerXe
+                );
+
+        spinnerDichVu =
+                findViewById(
+                        R.id.spinnerDichVu
+                );
+
+        btnChonNgay =
+                findViewById(
+                        R.id.btnChonNgay
+                );
+
+        btnChonGio =
+                findViewById(
+                        R.id.btnChonGio
+                );
+
+        edtGhiChu =
+                findViewById(
+                        R.id.edtGhiChu
+                );
+
+        btnXacNhanDatLich =
+                findViewById(
+                        R.id.btnXacNhanDatLich
+                );
+
+        // =====================================================
+        // FIREBASE
+        // =====================================================
+
+        firebaseAuth =
+                FirebaseAuth.getInstance();
+
+        firestore =
+                FirebaseFirestore.getInstance();
+
+        // =====================================================
+        // KHỞI TẠO DANH SÁCH
+        // =====================================================
+
+        danhSachXe =
+                new ArrayList<>();
+
+        danhSachDichVu =
+                new ArrayList<>();
+
+        danhSachMaXe =
+                new ArrayList<>();
+
+        danhSachMaDichVu =
+                new ArrayList<>();
+
+        // =====================================================
+        // ADAPTER XE
+        // =====================================================
+
+        adapterXe =
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        danhSachXe
+                );
+
+        spinnerXe.setAdapter(
+                adapterXe
         );
 
-        spinnerDichVu.setAdapter(adapterDichVu);
+        // =====================================================
+        // ADAPTER DỊCH VỤ
+        // =====================================================
 
-        // Tải dữ liệu
+        adapterDichVu =
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        danhSachDichVu
+                );
+
+        spinnerDichVu.setAdapter(
+                adapterDichVu
+        );
+
+        // =====================================================
+        // SỰ KIỆN
+        // =====================================================
+
+        btnChonNgay.setOnClickListener(
+                v -> chonNgay()
+        );
+
+        btnChonGio.setOnClickListener(
+                v -> chonGio()
+        );
+
+        btnXacNhanDatLich.setOnClickListener(
+                v -> luuLichDat()
+        );
+
+        // =====================================================
+        // TẢI DỮ LIỆU
+        // =====================================================
+
         taiDanhSachXe();
+
         taiDanhSachDichVu();
     }
+
+    // =========================================================
+    // TẢI DANH SÁCH XE
+    // =========================================================
 
     private void taiDanhSachXe() {
 
         if (firebaseAuth.getCurrentUser() == null) {
+
             Toast.makeText(
                     this,
                     "Vui lòng đăng nhập lại",
                     Toast.LENGTH_SHORT
             ).show();
+
             return;
         }
 
-        String userId = firebaseAuth
-                .getCurrentUser()
-                .getUid();
+        String userId =
+                firebaseAuth
+                        .getCurrentUser()
+                        .getUid();
 
-        firestore.collection("vehicles")
-                .whereEqualTo("userId", userId)
+        firestore
+                .collection("vehicles")
+                .whereEqualTo(
+                        "userId",
+                        userId
+                )
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
 
@@ -117,31 +214,58 @@ public class DatLich extends AppCompatActivity {
 
                     if (querySnapshot.isEmpty()) {
 
-                        danhSachXe.add("Bạn chưa có xe");
+                        danhSachXe.add(
+                                "Bạn chưa có xe"
+                        );
 
                     } else {
 
-                        querySnapshot.getDocuments().forEach(document -> {
+                        querySnapshot
+                                .getDocuments()
+                                .forEach(document -> {
 
-                            danhSachMaXe.add(document.getId());
+                                    danhSachMaXe.add(
+                                            document.getId()
+                                    );
 
-                            String hangXe =
-                                    document.getString("brand");
+                                    String hangXe =
+                                            document.getString(
+                                                    "brand"
+                                            );
 
-                            String tenXe =
-                                    document.getString("model");
+                                    String tenXe =
+                                            document.getString(
+                                                    "model"
+                                            );
 
-                            String bienSo =
-                                    document.getString("licensePlate");
+                                    String bienSo =
+                                            document.getString(
+                                                    "licensePlate"
+                                            );
 
-                            String thongTin =
-                                    hangXe + " "
-                                            + tenXe
-                                            + " - "
-                                            + bienSo;
+                                    if (hangXe == null) {
+                                        hangXe = "";
+                                    }
 
-                            danhSachXe.add(thongTin);
-                        });
+                                    if (tenXe == null) {
+                                        tenXe = "";
+                                    }
+
+                                    if (bienSo == null) {
+                                        bienSo = "";
+                                    }
+
+                                    String thongTin =
+                                            hangXe
+                                                    + " "
+                                                    + tenXe
+                                                    + " - "
+                                                    + bienSo;
+
+                                    danhSachXe.add(
+                                            thongTin
+                                    );
+                                });
                     }
 
                     adapterXe.notifyDataSetChanged();
@@ -154,14 +278,21 @@ public class DatLich extends AppCompatActivity {
                             "Không tải được danh sách xe",
                             Toast.LENGTH_SHORT
                     ).show();
-
                 });
     }
 
+    // =========================================================
+    // TẢI DANH SÁCH DỊCH VỤ
+    // =========================================================
+
     private void taiDanhSachDichVu() {
 
-        firestore.collection("services")
-                .whereEqualTo("hoạt động", true)
+        firestore
+                .collection("services")
+                .whereEqualTo(
+                        "hoạt động",
+                        true
+                )
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
 
@@ -170,31 +301,62 @@ public class DatLich extends AppCompatActivity {
 
                     if (querySnapshot.isEmpty()) {
 
-                        danhSachDichVu.add("Chưa có dịch vụ");
+                        danhSachDichVu.add(
+                                "Chưa có dịch vụ"
+                        );
 
                     } else {
 
-                        querySnapshot.getDocuments().forEach(document -> {
+                        querySnapshot
+                                .getDocuments()
+                                .forEach(document -> {
 
-                            danhSachMaDichVu.add(document.getId());
+                                    String maDichVu =
+                                            document.getId();
 
-                            String tenDichVu =
-                                    document.getString("name");
+                                    danhSachMaDichVu.add(
+                                            maDichVu
+                                    );
 
-                            String gia =
-                                    document.getString("giá tiền");
+                                    String tenDichVu =
+                                            document.getString(
+                                                    "name"
+                                            );
 
-                            String thongTin =
-                                    tenDichVu
-                                            + " - "
-                                            + gia
-                                            + " VNĐ";
+                                    String gia =
+                                            document.getString(
+                                                    "giá tiền"
+                                            );
 
-                            danhSachDichVu.add(thongTin);
-                        });
+                                    if (tenDichVu == null) {
+                                        tenDichVu =
+                                                "Dịch vụ";
+                                    }
+
+                                    if (gia == null) {
+                                        gia =
+                                                "Liên hệ";
+                                    }
+
+                                    String thongTin =
+                                            tenDichVu
+                                                    + " - "
+                                                    + gia
+                                                    + " VNĐ";
+
+                                    danhSachDichVu.add(
+                                            thongTin
+                                    );
+                                });
                     }
 
                     adapterDichVu.notifyDataSetChanged();
+
+                    // =================================================
+                    // SAU KHI TẢI XONG → CHỌN DỊCH VỤ ĐƯỢC TRUYỀN VÀO
+                    // =================================================
+
+                    chonDichVuDaTruyen();
 
                 })
                 .addOnFailureListener(e -> {
@@ -205,36 +367,79 @@ public class DatLich extends AppCompatActivity {
                                     + e.getMessage(),
                             Toast.LENGTH_LONG
                     ).show();
-
                 });
     }
 
+    // =========================================================
+    // TỰ CHỌN DỊCH VỤ
+    // =========================================================
+
+    private void chonDichVuDaTruyen() {
+
+        if (maDichVuDuocChon == null
+                || maDichVuDuocChon.isEmpty()) {
+
+            return;
+        }
+
+        int viTri =
+                danhSachMaDichVu.indexOf(
+                        maDichVuDuocChon
+                );
+
+        if (viTri >= 0
+                && viTri < danhSachDichVu.size()) {
+
+            spinnerDichVu.setSelection(
+                    viTri
+            );
+        }
+    }
+
+    // =========================================================
+    // CHỌN NGÀY
+    // =========================================================
+
     private void chonNgay() {
 
-        java.util.Calendar lich =
-                java.util.Calendar.getInstance();
+        Calendar lich =
+                Calendar.getInstance();
 
         int nam =
-                lich.get(java.util.Calendar.YEAR);
+                lich.get(
+                        Calendar.YEAR
+                );
 
         int thang =
-                lich.get(java.util.Calendar.MONTH);
+                lich.get(
+                        Calendar.MONTH
+                );
 
         int ngay =
-                lich.get(java.util.Calendar.DAY_OF_MONTH);
+                lich.get(
+                        Calendar.DAY_OF_MONTH
+                );
 
         DatePickerDialog datePickerDialog =
                 new DatePickerDialog(
                         this,
-                        (view, namChon, thangChon, ngayChon) -> {
+                        (
+                                view,
+                                namChon,
+                                thangChon,
+                                ngayChon
+                        ) -> {
 
                             String ngayHienThi =
-                                    ngayChon + "/" +
-                                            (thangChon + 1) + "/" +
-                                            namChon;
+                                    ngayChon
+                                            + "/"
+                                            + (thangChon + 1)
+                                            + "/"
+                                            + namChon;
 
                             btnChonNgay.setText(
-                                    "Ngày: " + ngayHienThi
+                                    "Ngày: "
+                                            + ngayHienThi
                             );
                         },
                         nam,
@@ -245,21 +450,33 @@ public class DatLich extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    // =========================================================
+    // CHỌN GIỜ
+    // =========================================================
+
     private void chonGio() {
 
-        java.util.Calendar lich =
-                java.util.Calendar.getInstance();
+        Calendar lich =
+                Calendar.getInstance();
 
         int gio =
-                lich.get(java.util.Calendar.HOUR_OF_DAY);
+                lich.get(
+                        Calendar.HOUR_OF_DAY
+                );
 
         int phut =
-                lich.get(java.util.Calendar.MINUTE);
+                lich.get(
+                        Calendar.MINUTE
+                );
 
-        android.app.TimePickerDialog timePickerDialog =
-                new android.app.TimePickerDialog(
+        TimePickerDialog timePickerDialog =
+                new TimePickerDialog(
                         this,
-                        (view, gioChon, phutChon) -> {
+                        (
+                                view,
+                                gioChon,
+                                phutChon
+                        ) -> {
 
                             String gioHienThi =
                                     String.format(
@@ -269,7 +486,8 @@ public class DatLich extends AppCompatActivity {
                                     );
 
                             btnChonGio.setText(
-                                    "Giờ: " + gioHienThi
+                                    "Giờ: "
+                                            + gioHienThi
                             );
                         },
                         gio,
@@ -280,9 +498,16 @@ public class DatLich extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    // =========================================================
+    // LƯU LỊCH ĐẶT
+    // =========================================================
+
     private void luuLichDat() {
 
-        // Kiểm tra người dùng
+        // =====================================================
+        // KIỂM TRA USER
+        // =====================================================
+
         if (firebaseAuth.getCurrentUser() == null) {
 
             Toast.makeText(
@@ -294,11 +519,15 @@ public class DatLich extends AppCompatActivity {
             return;
         }
 
-        // Kiểm tra xe
+        // =====================================================
+        // KIỂM TRA XE
+        // =====================================================
+
         if (danhSachXe.isEmpty()
                 || danhSachMaXe.isEmpty()
                 || spinnerXe.getSelectedItemPosition() < 0
-                || spinnerXe.getSelectedItemPosition() >= danhSachMaXe.size()) {
+                || spinnerXe.getSelectedItemPosition()
+                >= danhSachMaXe.size()) {
 
             Toast.makeText(
                     this,
@@ -309,11 +538,15 @@ public class DatLich extends AppCompatActivity {
             return;
         }
 
-        // Kiểm tra dịch vụ
+        // =====================================================
+        // KIỂM TRA DỊCH VỤ
+        // =====================================================
+
         if (danhSachDichVu.isEmpty()
                 || danhSachMaDichVu.isEmpty()
                 || spinnerDichVu.getSelectedItemPosition() < 0
-                || spinnerDichVu.getSelectedItemPosition() >= danhSachMaDichVu.size()) {
+                || spinnerDichVu.getSelectedItemPosition()
+                >= danhSachMaDichVu.size()) {
 
             Toast.makeText(
                     this,
@@ -324,27 +557,47 @@ public class DatLich extends AppCompatActivity {
             return;
         }
 
-        // Lấy mã người dùng
-        String maNguoiDung =
-                firebaseAuth.getCurrentUser().getUid();
+        // =====================================================
+        // USER ID
+        // =====================================================
 
-        // Lấy mã xe
+        String maNguoiDung =
+                firebaseAuth
+                        .getCurrentUser()
+                        .getUid();
+
+        // =====================================================
+        // XE
+        // =====================================================
+
         int viTriXe =
                 spinnerXe.getSelectedItemPosition();
 
         String maXe =
-                danhSachMaXe.get(viTriXe);
+                danhSachMaXe.get(
+                        viTriXe
+                );
 
-        // Lấy mã dịch vụ
+        // =====================================================
+        // DỊCH VỤ
+        // =====================================================
+
         int viTriDichVu =
                 spinnerDichVu.getSelectedItemPosition();
 
         String maDichVu =
-                danhSachMaDichVu.get(viTriDichVu);
+                danhSachMaDichVu.get(
+                        viTriDichVu
+                );
 
-        // Lấy ngày
+        // =====================================================
+        // NGÀY
+        // =====================================================
+
         String ngay =
-                btnChonNgay.getText().toString();
+                btnChonNgay
+                        .getText()
+                        .toString();
 
         if (ngay.equals("Chọn ngày")
                 || ngay.equals("📅  Chọn ngày")) {
@@ -358,9 +611,14 @@ public class DatLich extends AppCompatActivity {
             return;
         }
 
-        // Lấy giờ
+        // =====================================================
+        // GIỜ
+        // =====================================================
+
         String gio =
-                btnChonGio.getText().toString();
+                btnChonGio
+                        .getText()
+                        .toString();
 
         if (gio.equals("Chọn giờ")
                 || gio.equals("🕐  Chọn giờ")) {
@@ -374,31 +632,79 @@ public class DatLich extends AppCompatActivity {
             return;
         }
 
-        // Lấy ghi chú
-        String ghiChu =
-                edtGhiChu.getText().toString().trim();
+        // =====================================================
+        // GHI CHÚ
+        // =====================================================
 
-        // Tạo mã lịch
+        String ghiChu =
+                edtGhiChu
+                        .getText()
+                        .toString()
+                        .trim();
+
+        // =====================================================
+        // TẠO MÃ LỊCH
+        // =====================================================
+
         String maLich =
-                firestore.collection("appointments")
+                firestore
+                        .collection("appointments")
                         .document()
                         .getId();
 
-        // Tạo dữ liệu lịch
-        java.util.Map<String, Object> lichDat =
-                new java.util.HashMap<>();
+        // =====================================================
+        // DỮ LIỆU
+        // =====================================================
 
-        lichDat.put("maLich", maLich);
-        lichDat.put("maNguoiDung", maNguoiDung);
-        lichDat.put("maXe", maXe);
-        lichDat.put("maDichVu", maDichVu);
-        lichDat.put("ngay", ngay);
-        lichDat.put("gio", gio);
-        lichDat.put("ghiChu", ghiChu);
-        lichDat.put("trangThai", "PENDING");
+        Map<String, Object> lichDat =
+                new HashMap<>();
 
-        // Lưu vào Firestore
-        firestore.collection("appointments")
+        lichDat.put(
+                "maLich",
+                maLich
+        );
+
+        lichDat.put(
+                "maNguoiDung",
+                maNguoiDung
+        );
+
+        lichDat.put(
+                "maXe",
+                maXe
+        );
+
+        lichDat.put(
+                "maDichVu",
+                maDichVu
+        );
+
+        lichDat.put(
+                "ngay",
+                ngay
+        );
+
+        lichDat.put(
+                "gio",
+                gio
+        );
+
+        lichDat.put(
+                "ghiChu",
+                ghiChu
+        );
+
+        lichDat.put(
+                "trangThai",
+                "PENDING"
+        );
+
+        // =====================================================
+        // LƯU FIRESTORE
+        // =====================================================
+
+        firestore
+                .collection("appointments")
                 .document(maLich)
                 .set(lichDat)
                 .addOnSuccessListener(unused -> {
@@ -419,7 +725,6 @@ public class DatLich extends AppCompatActivity {
                                     + e.getMessage(),
                             Toast.LENGTH_LONG
                     ).show();
-
                 });
     }
 }

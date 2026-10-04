@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imgAdminPhuTung"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_foreground"
+                android:contentDescription="Ảnh phụ tùng" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="14dp">
+
+                <TextView
+                    android:id="@+id/txtAdminTenPhuTung"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dầu nhớt Castrol 10W40"
+                    android:textColor="#1F2937"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/txtAdminGiaPhuTung"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="150.000đ"
+                    android:textColor="#1565C0"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:id="@+id/txtAdminSoLuongPhuTung"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số lượng: 10"
+                    android:textColor="#6B7280"
+                    android:textSize="13sp"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/txtAdminTrangThaiPhuTung"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🟢 Còn hàng"
+                    android:textColor="#2E7D32"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="12dp">
+
+            <Button
+                android:id="@+id/btnSuaPhuTung"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Sửa"
+                android:textSize="13sp"
+                android:textColor="#1565C0"
+                android:textStyle="bold"
+                android:backgroundTint="#E3F2FD" />
+
+            <Button
+                android:id="@+id/btnXoaPhuTung"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Xóa"
+                android:textSize="13sp"
+                android:textColor="#C62828"
+                android:textStyle="bold"
+                android:backgroundTint="#FFEBEE"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

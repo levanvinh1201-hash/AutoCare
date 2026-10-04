@@ -9,21 +9,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.autocare.R;
-import com.example.autocare.LichDat;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AdminQuanLyLich extends AppCompatActivity {
 
     private RecyclerView recyclerLichAdmin;
     private TextView txtSoLuongLichAdmin;
 
-    private ArrayList<LichDat> danhSachLich;
+    private ArrayList<TaiKhoanLich> danhSachTaiKhoan;
 
-    private AdminLichAdapter adapter;
+    private TaiKhoanLichAdapter adapter;
 
     private FirebaseFirestore firestore;
+
+    // Lưu số lịch của từng user
+    private Map<String, Integer> soLuongLichTheoUser;
 
 
     @Override
@@ -33,6 +37,7 @@ public class AdminQuanLyLich extends AppCompatActivity {
         setContentView(
                 R.layout.activity_admin_quan_ly_lich
         );
+
 
         // =========================
         // FIRESTORE
@@ -61,9 +66,16 @@ public class AdminQuanLyLich extends AppCompatActivity {
         // DANH SÁCH
         // =========================
 
-        danhSachLich =
+        danhSachTaiKhoan =
                 new ArrayList<>();
 
+        soLuongLichTheoUser =
+                new HashMap<>();
+
+
+        // =========================
+        // RECYCLERVIEW
+        // =========================
 
         recyclerLichAdmin.setLayoutManager(
                 new LinearLayoutManager(this)
@@ -71,8 +83,9 @@ public class AdminQuanLyLich extends AppCompatActivity {
 
 
         adapter =
-                new AdminLichAdapter(
-                        danhSachLich
+                new TaiKhoanLichAdapter(
+                        this,
+                        danhSachTaiKhoan
                 );
 
 
@@ -82,19 +95,20 @@ public class AdminQuanLyLich extends AppCompatActivity {
 
 
         // =========================
-        // TẢI LỊCH
+        // TẢI DỮ LIỆU
         // =========================
 
-        taiDanhSachLich();
+        taiDanhSachTaiKhoan();
     }
 
 
     // =========================================================
-    // TẢI TẤT CẢ LỊCH ĐẶT
+    // TẢI DANH SÁCH TÀI KHOẢN KHÁCH HÀNG
     // =========================================================
 
-    private void taiDanhSachLich() {
+    private void taiDanhSachTaiKhoan() {
 
+        // Trước tiên tải tất cả lịch
         firestore
                 .collection("appointments")
                 .get()
@@ -102,54 +116,101 @@ public class AdminQuanLyLich extends AppCompatActivity {
                 .addOnSuccessListener(
                         querySnapshot -> {
 
-                            danhSachLich.clear();
+                            // Xóa dữ liệu cũ
+                            soLuongLichTheoUser.clear();
 
+
+                            // =========================
+                            // ĐẾM SỐ LỊCH THEO USER
+                            // =========================
 
                             for (var document :
                                     querySnapshot) {
-
-                                // =========================
-                                // LẤY DỮ LIỆU
-                                // =========================
-
-                                String maLich =
-                                        document.getString(
-                                                "maLich"
-                                        );
 
                                 String maNguoiDung =
                                         document.getString(
                                                 "maNguoiDung"
                                         );
 
-                                String maXe =
+                                if (maNguoiDung != null &&
+                                        !maNguoiDung.isEmpty()) {
+
+                                    int soLuong =
+                                            soLuongLichTheoUser.getOrDefault(
+                                                    maNguoiDung,
+                                                    0
+                                            );
+
+                                    soLuongLichTheoUser.put(
+                                            maNguoiDung,
+                                            soLuong + 1
+                                    );
+                                }
+                            }
+
+
+                            // Sau khi đếm xong
+                            // tải danh sách tài khoản
+                            taiTaiKhoanKhachHang();
+
+                        }
+                )
+
+                .addOnFailureListener(
+                        e -> {
+
+                            Toast.makeText(
+                                    AdminQuanLyLich.this,
+                                    "Không tải được lịch: "
+                                            + e.getMessage(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                        }
+                );
+    }
+
+
+    // =========================================================
+    // TẢI TÀI KHOẢN KHÁCH HÀNG
+    // =========================================================
+
+    private void taiTaiKhoanKhachHang() {
+
+        firestore
+                .collection("users")
+                .whereEqualTo(
+                        "role",
+                        "customer"
+                )
+                .get()
+
+                .addOnSuccessListener(
+                        querySnapshot -> {
+
+                            danhSachTaiKhoan.clear();
+
+
+                            // =========================
+                            // DUYỆT TỪNG TÀI KHOẢN
+                            // =========================
+
+                            for (var document :
+                                    querySnapshot) {
+
+                                String userId =
                                         document.getString(
-                                                "maXe"
+                                                "userId"
                                         );
 
-                                String maDichVu =
+                                String hoTen =
                                         document.getString(
-                                                "maDichVu"
+                                                "hoTen"
                                         );
 
-                                String ngay =
+                                String email =
                                         document.getString(
-                                                "ngay"
-                                        );
-
-                                String gio =
-                                        document.getString(
-                                                "gio"
-                                        );
-
-                                String ghiChu =
-                                        document.getString(
-                                                "ghiChu"
-                                        );
-
-                                String trangThai =
-                                        document.getString(
-                                                "trangThai"
+                                                "email"
                                         );
 
 
@@ -157,72 +218,62 @@ public class AdminQuanLyLich extends AppCompatActivity {
                                 // GIÁ TRỊ MẶC ĐỊNH
                                 // =========================
 
-                                if (maLich == null ||
-                                        maLich.isEmpty()) {
+                                if (userId == null ||
+                                        userId.isEmpty()) {
 
-                                    maLich =
+                                    userId =
                                             document.getId();
                                 }
 
-                                if (maNguoiDung == null) {
-                                    maNguoiDung = "";
+                                if (hoTen == null ||
+                                        hoTen.isEmpty()) {
+
+                                    hoTen =
+                                            "Chưa có tên";
                                 }
 
-                                if (maXe == null) {
-                                    maXe = "";
-                                }
-
-                                if (maDichVu == null) {
-                                    maDichVu = "";
-                                }
-
-                                if (ngay == null) {
-                                    ngay = "";
-                                }
-
-                                if (gio == null) {
-                                    gio = "";
-                                }
-
-                                if (ghiChu == null) {
-                                    ghiChu = "";
-                                }
-
-                                if (trangThai == null) {
-                                    trangThai = "PENDING";
+                                if (email == null) {
+                                    email = "";
                                 }
 
 
                                 // =========================
-                                // TẠO ĐỐI TƯỢNG LỊCH
+                                // LẤY SỐ LỊCH
                                 // =========================
 
-                                LichDat lich =
-                                        new LichDat(
-                                                maLich,
-                                                maNguoiDung,
-                                                maXe,
-                                                maDichVu,
-                                                ngay,
-                                                gio,
-                                                ghiChu,
-                                                trangThai
+                                int soLuongLich =
+                                        soLuongLichTheoUser.getOrDefault(
+                                                userId,
+                                                0
                                         );
 
 
-                                danhSachLich.add(
-                                        lich
+                                // =========================
+                                // TẠO ĐỐI TƯỢNG
+                                // =========================
+
+                                TaiKhoanLich taiKhoan =
+                                        new TaiKhoanLich(
+                                                userId,
+                                                hoTen,
+                                                email,
+                                                soLuongLich
+                                        );
+
+
+                                danhSachTaiKhoan.add(
+                                        taiKhoan
                                 );
                             }
 
 
                             // =========================
-                            // CẬP NHẬT SỐ LƯỢNG
+                            // CẬP NHẬT SỐ TÀI KHOẢN
                             // =========================
 
                             txtSoLuongLichAdmin.setText(
-                                    danhSachLich.size()
-                                            + " lịch"
+                                    danhSachTaiKhoan.size()
+                                            + " tài khoản"
                             );
 
 
@@ -234,14 +285,14 @@ public class AdminQuanLyLich extends AppCompatActivity {
 
 
                             // =========================
-                            // KHÔNG CÓ LỊCH
+                            // KHÔNG CÓ KHÁCH
                             // =========================
 
-                            if (danhSachLich.isEmpty()) {
+                            if (danhSachTaiKhoan.isEmpty()) {
 
                                 Toast.makeText(
                                         AdminQuanLyLich.this,
-                                        "Chưa có lịch đặt nào",
+                                        "Chưa có tài khoản khách hàng",
                                         Toast.LENGTH_SHORT
                                 ).show();
                             }
@@ -254,7 +305,7 @@ public class AdminQuanLyLich extends AppCompatActivity {
 
                             Toast.makeText(
                                     AdminQuanLyLich.this,
-                                    "Không tải được lịch: "
+                                    "Không tải được tài khoản: "
                                             + e.getMessage(),
                                     Toast.LENGTH_LONG
                             ).show();

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.autocare.R;
 import com.example.autocare.TaiKhoan;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -28,12 +29,14 @@ public class TaiKhoanAdapter
     private ArrayList<TaiKhoan> danhSachTaiKhoan;
 
     private FirebaseFirestore firestore;
+    private FirebaseAuth firebaseAuth;
 
     public TaiKhoanAdapter(ArrayList<TaiKhoan> danhSachTaiKhoan) {
 
         this.danhSachTaiKhoan = danhSachTaiKhoan;
 
         firestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     @NonNull
@@ -139,6 +142,33 @@ public class TaiKhoanAdapter
 
         holder.btnXoaTaiKhoan.setOnClickListener(v -> {
 
+            String uidHienTai = null;
+
+            if (firebaseAuth.getCurrentUser() != null) {
+
+                uidHienTai =
+                        firebaseAuth
+                                .getCurrentUser()
+                                .getUid();
+            }
+
+
+            // Không cho Admin tự xóa chính mình
+            if (uidHienTai != null &&
+                    uidHienTai.equals(
+                            taiKhoan.getUserId()
+                    )) {
+
+                Toast.makeText(
+                        v.getContext(),
+                        "Không thể xóa tài khoản Admin đang đăng nhập!",
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return;
+            }
+
+
             hienThiDialogXoaTaiKhoan(
                     v.getContext(),
                     taiKhoan,
@@ -177,14 +207,18 @@ public class TaiKhoanAdapter
                 );
 
 
-        // Hiển thị dữ liệu hiện tại
+        // =========================
+        // HIỂN THỊ DỮ LIỆU HIỆN TẠI
+        // =========================
 
         edtHoTen.setText(
                 taiKhoan.getHoTen()
         );
 
 
-        // Danh sách quyền
+        // =========================
+        // DANH SÁCH QUYỀN
+        // =========================
 
         String[] danhSachRole = {
                 "customer",
@@ -210,7 +244,9 @@ public class TaiKhoanAdapter
         );
 
 
-        // Chọn role hiện tại
+        // =========================
+        // CHỌN ROLE HIỆN TẠI
+        // =========================
 
         if ("admin".equalsIgnoreCase(
                 taiKhoan.getRole())) {
@@ -223,7 +259,9 @@ public class TaiKhoanAdapter
         }
 
 
-        // Tạo Dialog
+        // =========================
+        // TẠO DIALOG
+        // =========================
 
         AlertDialog dialog =
                 new AlertDialog.Builder(context)
@@ -240,6 +278,10 @@ public class TaiKhoanAdapter
                         .create();
 
 
+        // =========================
+        // XỬ LÝ NÚT LƯU
+        // =========================
+
         dialog.setOnShowListener(d -> {
 
             Button btnLuu =
@@ -249,6 +291,10 @@ public class TaiKhoanAdapter
 
 
             btnLuu.setOnClickListener(v -> {
+
+                // =========================
+                // LẤY DỮ LIỆU
+                // =========================
 
                 String hoTen =
                         edtHoTen
@@ -263,7 +309,9 @@ public class TaiKhoanAdapter
                                 .toString();
 
 
-                // Kiểm tra họ tên
+                // =========================
+                // KIỂM TRA HỌ TÊN
+                // =========================
 
                 if (hoTen.isEmpty()) {
 
@@ -276,6 +324,10 @@ public class TaiKhoanAdapter
                     return;
                 }
 
+
+                // =========================
+                // LẤY USER ID
+                // =========================
 
                 String userId =
                         taiKhoan.getUserId();
@@ -294,7 +346,35 @@ public class TaiKhoanAdapter
                 }
 
 
-                // Dữ liệu cần cập nhật
+                // =========================================
+                // KHÔNG CHO ADMIN TỰ HẠ QUYỀN MÌNH
+                // =========================================
+
+                if (firebaseAuth.getCurrentUser() != null) {
+
+                    String uidHienTai =
+                            firebaseAuth
+                                    .getCurrentUser()
+                                    .getUid();
+
+
+                    if (uidHienTai.equals(userId) &&
+                            "customer".equalsIgnoreCase(role)) {
+
+                        Toast.makeText(
+                                context,
+                                "Không thể tự hạ quyền Admin của chính mình!",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                        return;
+                    }
+                }
+
+
+                // =========================
+                // DỮ LIỆU CẦN CẬP NHẬT
+                // =========================
 
                 HashMap<String, Object> duLieuCapNhat =
                         new HashMap<>();
@@ -315,21 +395,16 @@ public class TaiKhoanAdapter
                 btnLuu.setEnabled(false);
 
 
-                // Cập nhật Firestore
+                // =========================
+                // CẬP NHẬT FIRESTORE
+                // =========================
 
                 firestore
                         .collection("users")
                         .document(userId)
                         .update(duLieuCapNhat)
+
                         .addOnSuccessListener(unused -> {
-
-                            // Cập nhật dữ liệu trên danh sách
-
-                            danhSachTaiKhoan
-                                    .get(
-                                            danhSachTaiKhoan
-                                                    .indexOf(taiKhoan)
-                                    );
 
                             Toast.makeText(
                                     context,
@@ -341,11 +416,10 @@ public class TaiKhoanAdapter
                             dialog.dismiss();
 
 
-                            // Refresh item
-
                             notifyDataSetChanged();
 
                         })
+
                         .addOnFailureListener(e -> {
 
                             btnLuu.setEnabled(true);
@@ -358,10 +432,14 @@ public class TaiKhoanAdapter
                             ).show();
 
                         });
+
             });
 
         });
 
+
+        // QUAN TRỌNG:
+        // dialog.show() phải nằm ngoài setOnShowListener
 
         dialog.show();
     }
@@ -375,7 +453,6 @@ public class TaiKhoanAdapter
             Context context,
             TaiKhoan taiKhoan,
             int position) {
-
 
         new AlertDialog.Builder(context)
 
@@ -418,7 +495,6 @@ public class TaiKhoanAdapter
             TaiKhoan taiKhoan,
             int position) {
 
-
         String userId =
                 taiKhoan.getUserId();
 
@@ -433,6 +509,28 @@ public class TaiKhoanAdapter
             ).show();
 
             return;
+        }
+
+
+        // Kiểm tra lại một lần nữa trước khi xóa
+        if (firebaseAuth.getCurrentUser() != null) {
+
+            String uidHienTai =
+                    firebaseAuth
+                            .getCurrentUser()
+                            .getUid();
+
+
+            if (uidHienTai.equals(userId)) {
+
+                Toast.makeText(
+                        context,
+                        "Không thể xóa tài khoản Admin đang đăng nhập!",
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return;
+            }
         }
 
 
@@ -454,9 +552,11 @@ public class TaiKhoanAdapter
                                 viTri
                         );
 
+
                         notifyItemRemoved(
                                 viTri
                         );
+
 
                         notifyItemRangeChanged(
                                 viTri,

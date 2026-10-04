@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <EditText
+            android:id="@+id/edtTenPhuTung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên phụ tùng"
+            android:inputType="text"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/edtGiaPhuTung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Giá phụ tùng"
+            android:inputType="number"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/edtMoTaPhuTung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Mô tả phụ tùng"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:gravity="top"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/edtHinhAnhPhuTung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Tên ảnh trong drawable, ví dụ: loc_gio"
+            android:inputType="text"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/edtSoLuongPhuTung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Số lượng tồn kho"
+            android:inputType="number"
+            android:padding="12dp" />
+
+    </LinearLayout>
+
+</ScrollView>

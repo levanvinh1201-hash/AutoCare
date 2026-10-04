@@ -62,6 +62,13 @@
         <activity
             android:name=".admin.AdminQuanLyDichVu"
             android:exported="false" />
+        <activity
+            android:name=".admin.AdminLichCuaKhach"
+            android:exported="false" />
+
+        <activity
+            android:name=".admin.AdminQuanLyPhuTung"
+            android:exported="false" />
     </application>
 
 </manifest>

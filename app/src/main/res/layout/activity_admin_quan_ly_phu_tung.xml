@@ -7,8 +7,6 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- HEADER -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="170dp"
@@ -20,13 +18,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="📅"
+            android:text="🔧"
             android:textSize="42sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quản lý lịch đặt"
+            android:text="Quản lý phụ tùng"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -35,15 +33,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chọn tài khoản để xem lịch đặt"
+            android:text="Quản lý tên, giá và tình trạng phụ tùng"
             android:textColor="#E3F2FD"
             android:textSize="13sp"
             android:layout_marginTop="4dp"/>
 
     </LinearLayout>
-
-
-    <!-- TIÊU ĐỀ -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,31 +50,43 @@
         android:paddingTop="18dp"
         android:paddingBottom="10dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Danh sách khách hàng"
-            android:textColor="#1F2937"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtSoLuongLichAdmin"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danh sách phụ tùng"
+                android:textColor="#1F2937"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtSoLuongPhuTung"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 phụ tùng"
+                android:textColor="#1565C0"
+                android:textSize="13sp"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnThemPhuTung"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 tài khoản"
-            android:textColor="#1565C0"
-            android:textSize="14sp"
+            android:text="+ Thêm"
+            android:textAllCaps="false"
             android:textStyle="bold"/>
 
     </LinearLayout>
 
-
-    <!-- DANH SÁCH TÀI KHOẢN -->
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerLichAdmin"
+        android:id="@+id/recyclerPhuTung"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

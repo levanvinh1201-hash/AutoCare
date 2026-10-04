@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <!-- ICON KHÁCH HÀNG -->
+
+        <TextView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="👤"
+            android:textSize="25sp"
+            android:background="#E3F2FD"/>
+
+
+        <!-- THÔNG TIN KHÁCH HÀNG -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="14dp">
+
+            <TextView
+                android:id="@+id/txtAdminTenKhach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nguyễn Văn A"
+                android:textColor="#1F2937"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/txtAdminEmailKhach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="example@gmail.com"
+                android:textColor="#6B7280"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/txtAdminSoLichKhach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 lịch đặt"
+                android:textColor="#1565C0"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="7dp"
+                android:background="#E3F2FD"
+                android:paddingStart="9dp"
+                android:paddingEnd="9dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"/>
+
+        </LinearLayout>
+
+
+        <!-- MŨI TÊN -->
+
+        <TextView
+            android:layout_width="32dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="›"
+            android:textColor="#1565C0"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

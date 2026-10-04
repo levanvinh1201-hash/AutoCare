@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.autocare.R;
 import com.example.autocare.TaiKhoan;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -98,6 +100,10 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
         taiDanhSachTaiKhoan();
     }
 
+    // =========================================================
+    // TẢI DANH SÁCH TÀI KHOẢN
+    // =========================================================
+
     private void taiDanhSachTaiKhoan() {
 
         firestore
@@ -150,18 +156,18 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                         );
                     }
 
-                    // Cập nhật số lượng
+                    // ================= SỐ LƯỢNG =================
 
                     txtSoLuongTaiKhoan.setText(
                             danhSachTaiKhoan.size()
                                     + " tài khoản"
                     );
 
-                    // Cập nhật RecyclerView
+                    // ================= CẬP NHẬT LIST =================
 
                     adapter.notifyDataSetChanged();
 
-                    // Không có tài khoản
+                    // ================= KHÔNG CÓ TÀI KHOẢN =================
 
                     if (danhSachTaiKhoan.isEmpty()) {
 
@@ -183,6 +189,10 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                     ).show();
                 });
     }
+
+    // =========================================================
+    // DIALOG THÊM TÀI KHOẢN
+    // =========================================================
 
     private void hienThiDialogThemTaiKhoan() {
 
@@ -259,6 +269,8 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
 
             btnThem.setOnClickListener(v -> {
 
+                // ================= LẤY DỮ LIỆU =================
+
                 String hoTen =
                         edtHoTen
                                 .getText()
@@ -282,7 +294,7 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                                 .getSelectedItem()
                                 .toString();
 
-                // ================= KIỂM TRA DỮ LIỆU =================
+                // ================= KIỂM TRA =================
 
                 if (hoTen.isEmpty()) {
 
@@ -328,11 +340,55 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                     return;
                 }
 
-                // ================= TẠO FIREBASE AUTH =================
+                // ================= KHÓA NÚT =================
 
                 btnThem.setEnabled(false);
 
-                firebaseAuth
+                // =================================================
+                // TẠO FIREBASE APP PHỤ
+                // =================================================
+
+                FirebaseOptions options =
+                        FirebaseApp
+                                .getInstance()
+                                .getOptions();
+
+                FirebaseApp appTam;
+
+                try {
+
+                    appTam =
+                            FirebaseApp.getInstance(
+                                    "SecondaryApp"
+                            );
+
+                } catch (IllegalStateException e) {
+
+                    appTam =
+                            FirebaseApp.initializeApp(
+                                    AdminQuanLyTaiKhoan.this,
+                                    options,
+                                    "SecondaryApp"
+                            );
+                }
+
+                final FirebaseApp secondaryApp =
+                        appTam;
+
+                // =================================================
+                // FIREBASE AUTH PHỤ
+                // =================================================
+
+                FirebaseAuth secondaryAuth =
+                        FirebaseAuth.getInstance(
+                                secondaryApp
+                        );
+
+                // =================================================
+                // TẠO TÀI KHOẢN MỚI
+                // =================================================
+
+                secondaryAuth
                         .createUserWithEmailAndPassword(
                                 email,
                                 matKhau
@@ -350,6 +406,10 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                                                 Toast.LENGTH_LONG
                                         ).show();
 
+                                        secondaryAuth.signOut();
+
+                                        secondaryApp.delete();
+
                                         return;
                                     }
 
@@ -358,7 +418,9 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                                                     .getUser()
                                                     .getUid();
 
-                                    // ================= TẠO DỮ LIỆU FIRESTORE =================
+                                    // =================================================
+                                    // TẠO DỮ LIỆU FIRESTORE
+                                    // =================================================
 
                                     HashMap<String, Object> taiKhoan =
                                             new HashMap<>();
@@ -387,6 +449,7 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                                             .collection("users")
                                             .document(userId)
                                             .set(taiKhoan)
+
                                             .addOnSuccessListener(
                                                     unused -> {
 
@@ -403,8 +466,15 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                                                         dialog.dismiss();
 
                                                         taiDanhSachTaiKhoan();
+
+                                                        // Đăng xuất Auth phụ
+                                                        secondaryAuth.signOut();
+
+                                                        // Xóa Firebase App phụ
+                                                        secondaryApp.delete();
                                                     }
                                             )
+
                                             .addOnFailureListener(
                                                     e -> {
 
@@ -418,10 +488,15 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                                                                         + e.getMessage(),
                                                                 Toast.LENGTH_LONG
                                                         ).show();
+
+                                                        secondaryAuth.signOut();
+
+                                                        secondaryApp.delete();
                                                     }
                                             );
                                 }
                         )
+
                         .addOnFailureListener(
                                 e -> {
 
@@ -431,6 +506,7 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                                             e.getMessage();
 
                                     if (loi == null) {
+
                                         loi =
                                                 "Không thể tạo tài khoản";
                                     }
@@ -440,9 +516,14 @@ public class AdminQuanLyTaiKhoan extends AppCompatActivity {
                                             loi,
                                             Toast.LENGTH_LONG
                                     ).show();
+
+                                    secondaryAuth.signOut();
+
+                                    secondaryApp.delete();
                                 }
                         );
             });
+
         });
 
         dialog.show();

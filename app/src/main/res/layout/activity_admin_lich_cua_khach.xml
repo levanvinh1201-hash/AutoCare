@@ -1,50 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- HEADER -->
-
+    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="150dp"
         android:orientation="vertical"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:background="#1565C0"
-        android:padding="20dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/txtTenKhachHang"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📅"
-            android:textSize="42sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quản lý lịch đặt"
+            android:text="Nguyễn Văn A"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="23sp"
             android:textStyle="bold"
-            android:layout_marginTop="6dp"/>
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chọn tài khoản để xem lịch đặt"
+            android:text="Danh sách lịch đặt của khách hàng"
             android:textColor="#E3F2FD"
-            android:textSize="13sp"
-            android:layout_marginTop="4dp"/>
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"/>
 
     </LinearLayout>
 
-
-    <!-- TIÊU ĐỀ -->
-
+    <!-- Tiêu đề + số lượng -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,27 +52,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Danh sách khách hàng"
+            android:text="Lịch đặt"
             android:textColor="#1F2937"
             android:textSize="18sp"
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/txtSoLuongLichAdmin"
+            android:id="@+id/txtSoLuongLichKhach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 tài khoản"
+            android:text="0 lịch"
             android:textColor="#1565C0"
             android:textSize="14sp"
             android:textStyle="bold"/>
 
     </LinearLayout>
 
-
-    <!-- DANH SÁCH TÀI KHOẢN -->
-
+    <!-- Danh sách lịch -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerLichAdmin"
+        android:id="@+id/recyclerLichKhach"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

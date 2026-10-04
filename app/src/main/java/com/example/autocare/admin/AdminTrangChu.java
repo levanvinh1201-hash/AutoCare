@@ -2,8 +2,10 @@ package com.example.autocare.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +13,9 @@ import com.example.autocare.DangNhap;
 import com.example.autocare.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AdminTrangChu extends AppCompatActivity {
 
@@ -25,6 +30,7 @@ public class AdminTrangChu extends AppCompatActivity {
     private TextView txtTongLich;
     private TextView txtLichChoXacNhan;
     private TextView txtDichVuHoatDong;
+    private TextView txtDoanhThu;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
@@ -49,16 +55,10 @@ public class AdminTrangChu extends AppCompatActivity {
         // =============================
         // ÁNH XẠ BUTTON
         // =============================
-
-        btnQuanLyLich =
-                findViewById(R.id.btnQuanLyLich);
-
-        btnQuanLyDichVu =
-                findViewById(R.id.btnQuanLyDichVu);
-
-        btnQuanLyTaiKhoan =
-                findViewById(R.id.btnQuanLyTaiKhoan);
-
+        View btnQuanLyLich = findViewById(R.id.btnQuanLyLich);
+        View btnQuanLyDichVu = findViewById(R.id.btnQuanLyDichVu);
+        View btnQuanLyPhuTung = findViewById(R.id.btnQuanLyPhuTung);
+        View btnQuanLyTaiKhoan = findViewById(R.id.btnQuanLyTaiKhoan);
         btnAdminDangXuat =
                 findViewById(R.id.btnAdminDangXuat);
 
@@ -81,6 +81,9 @@ public class AdminTrangChu extends AppCompatActivity {
 
         txtDichVuHoatDong =
                 findViewById(R.id.txtDichVuHoatDong);
+
+        txtDoanhThu =
+                findViewById(R.id.txtDoanhThu);
 
 
         // =============================
@@ -137,6 +140,10 @@ public class AdminTrangChu extends AppCompatActivity {
             startActivity(intent);
         });
 
+        btnQuanLyPhuTung.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminTrangChu.this, AdminQuanLyPhuTung.class);
+            startActivity(intent);
+        });
 
         // =============================
         // ĐĂNG XUẤT
@@ -277,15 +284,164 @@ public class AdminTrangChu extends AppCompatActivity {
                             );
                         }
                 );
+
+
+        // =============================
+        // 6. TÍNH DOANH THU
+        // =============================
+
+        tinhDoanhThu();
     }
 
 
     // =====================================================
-    // CẬP NHẬT DASHBOARD MỖI KHI QUAY LẠI TRANG ADMIN
+    // TÍNH DOANH THU
+    // =====================================================
+
+    private void tinhDoanhThu() {
+
+        // Lấy tất cả dịch vụ trước
+        firestore
+                .collection("services")
+                .get()
+                .addOnSuccessListener(serviceSnapshot -> {
+
+                    // Tạo danh sách:
+                    // mã dịch vụ -> giá tiền
+                    Map<String, Long> bangGia =
+                            new HashMap<>();
+
+                    for (var document : serviceSnapshot.getDocuments()) {
+
+                        String maDichVu =
+                                document.getString("dịch vụ");
+
+                        String giaTien =
+                                document.getString("giá tiền");
+
+                        if (maDichVu == null ||
+                                giaTien == null) {
+                            continue;
+                        }
+
+                        try {
+
+                            // Ví dụ:
+                            // "100.000" -> 100000
+                            // "1.500.000" -> 1500000
+
+                            String giaKhongDau =
+                                    giaTien
+                                            .replace(".", "")
+                                            .replace(",", "")
+                                            .trim();
+
+                            long gia =
+                                    Long.parseLong(giaKhongDau);
+
+                            bangGia.put(
+                                    maDichVu,
+                                    gia
+                            );
+
+                        } catch (NumberFormatException e) {
+
+                            // Bỏ qua giá không hợp lệ
+
+                        }
+                    }
+
+
+                    // =====================================
+                    // LẤY CÁC LỊCH ĐÃ HOÀN THÀNH
+                    // =====================================
+
+                    firestore
+                            .collection("appointments")
+                            .whereEqualTo(
+                                    "trangThai",
+                                    "COMPLETED"
+                            )
+                            .get()
+                            .addOnSuccessListener(
+                                    appointmentSnapshot -> {
+
+                                        long tongDoanhThu = 0;
+
+
+                                        for (var document :
+                                                appointmentSnapshot
+                                                        .getDocuments()) {
+
+                                            String maDichVu =
+                                                    document.getString(
+                                                            "maDichVu"
+                                                    );
+
+                                            if (maDichVu == null) {
+                                                continue;
+                                            }
+
+
+                                            Long gia =
+                                                    bangGia.get(
+                                                            maDichVu
+                                                    );
+
+                                            if (gia != null) {
+
+                                                tongDoanhThu += gia;
+
+                                            }
+                                        }
+
+
+                                        // =================================
+                                        // HIỂN THỊ DOANH THU
+                                        // =================================
+
+                                        txtDoanhThu.setText(
+                                                dinhDangTien(
+                                                        tongDoanhThu
+                                                )
+                                        );
+                                    }
+                            );
+                });
+    }
+
+
+    // =====================================================
+    // ĐỊNH DẠNG TIỀN
+    // =====================================================
+
+    private String dinhDangTien(long soTien) {
+
+        String tien =
+                String.format(
+                        "%,d",
+                        soTien
+                );
+
+        // Đổi dấu phẩy thành dấu chấm
+        // Ví dụ:
+        // 1500000 -> 1.500.000
+
+        tien =
+                tien.replace(",", ".");
+
+        return tien + " VNĐ";
+    }
+
+
+    // =====================================================
+    // CẬP NHẬT DASHBOARD
+    // MỖI KHI QUAY LẠI TRANG ADMIN
     // =====================================================
 
     @Override
     protected void onResume() {
+
         super.onResume();
 
         taiDashboard();
