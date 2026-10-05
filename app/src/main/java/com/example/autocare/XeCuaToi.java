@@ -244,3 +244,6 @@ public class XeCuaToi extends AppCompatActivity {
         dialog.show();
     }
 }
+
+
+// test
