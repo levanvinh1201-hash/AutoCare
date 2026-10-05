@@ -1,72 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="28dp"
-    android:background="#FFFFFF">
+    android:background="#F5F8FC"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:text="🚗"
-        android:textSize="60sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="AutoCare"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="#1976D2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="Đăng nhập tài khoản"
-        android:textSize="16sp"
-        android:textColor="#777777" />
-
-    <EditText
-        android:id="@+id/edtEmail"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="45dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:padding="15dp" />
-
-    <EditText
-        android:id="@+id/edtMatKhau"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="15dp"
-        android:hint="Mật khẩu"
-        android:inputType="textPassword"
-        android:padding="15dp" />
-
-    <Button
-        android:id="@+id/btnDangNhap"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="25dp"
-        android:text="ĐĂNG NHẬP"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tvDangKy"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Chưa có tài khoản? Đăng ký"
-        android:textSize="16sp"
-        android:textColor="#1976D2"
-        android:clickable="true"
-        android:focusable="true" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="35dp"
+        android:paddingBottom="30dp">
 
-</LinearLayout>
+        <!-- LOGO -->
+        <TextView
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            android:background="#E3F2FD"
+            android:gravity="center"
+            android:text="🚗"
+            android:textSize="42sp"
+            android:elevation="4dp" />
+
+        <!-- TÊN APP -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="AutoCare"
+            android:textColor="#1565C0"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Chăm sóc xe • Đơn giản • Tiện lợi"
+            android:textColor="#78909C"
+            android:textSize="14sp" />
+
+        <!-- TIÊU ĐỀ -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:text="Chào mừng trở lại 👋"
+            android:textColor="#263238"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Đăng nhập để tiếp tục sử dụng AutoCare"
+            android:textColor="#78909C"
+            android:textSize="14sp" />
+
+        <!-- EMAIL -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Email"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            android:hint="Nhập email của bạn"
+            android:inputType="textEmailAddress"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="#263238"
+            android:textColorHint="#9E9E9E"
+            android:textSize="15sp"
+            android:elevation="2dp" />
+
+        <!-- MẬT KHẨU -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Mật khẩu"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtMatKhau"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            android:hint="Nhập mật khẩu"
+            android:inputType="textPassword"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="#263238"
+            android:textColorHint="#9E9E9E"
+            android:textSize="15sp"
+            android:elevation="2dp" />
+
+        <!-- ĐĂNG NHẬP -->
+        <Button
+            android:id="@+id/btnDangNhap"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="26dp"
+            android:backgroundTint="#1565C0"
+            android:text="ĐĂNG NHẬP"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:elevation="3dp" />
+
+        <!-- HOẶC -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#DDE3EA" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:text="HOẶC"
+                android:textColor="#90A4AE"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#DDE3EA" />
+
+        </LinearLayout>
+
+        <!-- ĐĂNG KÝ -->
+        <TextView
+            android:id="@+id/tvDangKy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:padding="10dp"
+            android:text="Chưa có tài khoản?  Đăng ký"
+            android:textColor="#1565C0"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- FOOTER -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="© 2026 AutoCare"
+            android:textColor="#B0BEC5"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</ScrollView>
