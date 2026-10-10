@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.autocare.DangNhap;
-import com.example.autocare.FloatingChatButton;
+import com.example.autocare.TrangChu;
+import com.example.autocare.chatbox.ChatbotActivity;
+import com.example.autocare.chatbox.FloatingChatButton;
 import com.example.autocare.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -94,11 +95,13 @@ public class AdminTrangChu extends AppCompatActivity {
 
         taiDashboard();
         FloatingChatButton.attach(this, () -> {
-            Toast.makeText(
-                    this,
-                    "Trợ lý AI đang phát triển",
-                    Toast.LENGTH_SHORT
-            ).show();
+            android.content.Intent intent =
+                    new android.content.Intent(
+                            AdminTrangChu.this,
+                            ChatbotActivity.class
+                    );
+
+            startActivity(intent);
         });
 
 

@@ -15,11 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.autocare.chatbox.ChatbotActivity;
+import com.example.autocare.chatbox.FloatingChatButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.List;import android.widget.Toast;
 
 public class TrangChu extends AppCompatActivity {
 
@@ -168,11 +169,13 @@ public class TrangChu extends AppCompatActivity {
         // =========================
 
         FloatingChatButton.attach(this, () -> {
-            Toast.makeText(
-                    this,
-                    "Trợ lý AI đang phát triển",
-                    Toast.LENGTH_SHORT
-            ).show();
+            android.content.Intent intent =
+                    new android.content.Intent(
+                            TrangChu.this,
+                            ChatbotActivity.class
+                    );
+
+            startActivity(intent);
         });
 
         // =========================
@@ -213,10 +216,7 @@ public class TrangChu extends AppCompatActivity {
         btnNavPhuTung.setOnClickListener(v ->
                 sectionPhuTung.requestFocus()
         );
-
-        // =========================
         // TASKBAR - TÀI KHOẢN
-        // =========================
 
         btnNavTaiKhoan.setOnClickListener(v -> {
 
