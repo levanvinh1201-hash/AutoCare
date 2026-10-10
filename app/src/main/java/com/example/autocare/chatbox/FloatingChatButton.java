@@ -1,5 +1,5 @@
 
-package com.example.autocare;
+package com.example.autocare.chatbox;
 
 import android.app.Activity;
 import android.graphics.Color;
