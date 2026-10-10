@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;import android.widget.Toast;
 
 public class TrangChu extends AppCompatActivity {
 
@@ -63,7 +63,6 @@ public class TrangChu extends AppCompatActivity {
         btnDatLich = findViewById(R.id.btnDatLich);
         btnXeCuaToi = findViewById(R.id.btnXeCuaToi);
         btnLichSu = findViewById(R.id.btnLichSu);
-        btnChatBot = findViewById(R.id.btnChatBot);
         btnDangXuat = findViewById(R.id.btnDangXuat);
 
         layoutDichVu = findViewById(R.id.layoutDichVu);
@@ -168,10 +167,9 @@ public class TrangChu extends AppCompatActivity {
         // CHATBOT
         // =========================
 
-        btnChatBot.setOnClickListener(v -> {
-
+        FloatingChatButton.attach(this, () -> {
             Toast.makeText(
-                    TrangChu.this,
+                    this,
                     "Trợ lý AI đang phát triển",
                     Toast.LENGTH_SHORT
             ).show();
