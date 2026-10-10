@@ -3,7 +3,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F8FC"
     android:fillViewport="true">
 
     <LinearLayout
@@ -17,14 +16,12 @@
         android:paddingBottom="30dp">
 
         <!-- LOGO -->
-        <TextView
-            android:layout_width="82dp"
-            android:layout_height="82dp"
-            android:background="#E3F2FD"
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="120dp"
             android:gravity="center"
-            android:text="🚗"
-            android:textSize="42sp"
-            android:elevation="4dp" />
+            android:src="@drawable/dn_logo"
+            android:elevation="10dp" />
 
         <!-- TÊN APP -->
         <TextView
@@ -44,23 +41,6 @@
             android:textColor="#78909C"
             android:textSize="14sp" />
 
-        <!-- TIÊU ĐỀ -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:text="Chào mừng trở lại 👋"
-            android:textColor="#263238"
-            android:textSize="23sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Đăng nhập để tiếp tục sử dụng AutoCare"
-            android:textColor="#78909C"
-            android:textSize="14sp" />
 
         <!-- EMAIL -->
         <TextView
