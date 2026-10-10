@@ -92,7 +92,7 @@
             android:background="#F0F2F5" />
 
         <ImageButton
-            android:id="@+id/btnGuiTinNhan"
+            android:id="@+id/btnGui"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:background="#FFFFFF"

@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.content.Context;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ import java.util.Map;
 public class ChatbotActivity extends AppCompatActivity {
 
     private EditText edtTinNhan;
-    private Button btnGui;
+    private ImageButton btnGui;
     private TextView btnXoaLichSu;
     private RecyclerView recyclerChat;
 
@@ -74,7 +75,7 @@ public class ChatbotActivity extends AppCompatActivity {
 
     private void anhXaView() {
         edtTinNhan = findViewById(R.id.edtTinNhanChat);
-        btnGui = findViewById(R.id.btnGuiTinNhan);
+        btnGui = findViewById(R.id.btnGui);
         btnXoaLichSu = findViewById(R.id.btnXoaLichSuChat);
         recyclerChat = findViewById(R.id.recyclerChat);
     }
