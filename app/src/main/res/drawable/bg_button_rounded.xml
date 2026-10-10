@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Màu nền của nút -->
+    <solid android:color="#0099FF" />
+
+    <!-- Độ bo tròn 4 góc (Chỉnh số dp để tăng/giảm độ cong) -->
+    <corners android:radius="16dp" />
+
+    <!-- (Tùy chọn) Viền ngoài cho nút -->
+    <stroke
+        android:width="1dp"
+        android:color="#FFFFFF" />
+</shape>
