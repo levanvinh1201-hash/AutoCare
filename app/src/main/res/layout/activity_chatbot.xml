@@ -12,15 +12,13 @@
         android:orientation="horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:background="#1976D2">
+        android:background="@color/white">
 
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:gravity="center"
-            android:text="💬"
-            android:textSize="24sp"
-            android:background="#FFFFFF" />
+            android:src="@drawable/chatbot" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -33,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="AutoCare Assistant"
-                android:textColor="#FFFFFF"
+                android:textColor="#63E4D6"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
@@ -41,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hỗ trợ dịch vụ gara"
-                android:textColor="#E3F2FD"
+                android:textColor="#63E4D6"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -51,7 +49,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="Xóa"
-            android:textColor="#FFFFFF"
+            android:textColor="#63E4D6"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -93,12 +91,13 @@
             android:inputType="textCapSentences|textMultiLine"
             android:background="#F0F2F5" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnGuiTinNhan"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
+            android:background="#FFFFFF"
             android:layout_marginStart="8dp"
-            android:text="Gửi" />
+        android:src="@drawable/ic_send_paperplane" />
     </LinearLayout>
 
 </LinearLayout>

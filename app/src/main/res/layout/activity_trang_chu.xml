@@ -384,31 +384,8 @@
                 android:textColor="#555555" />
 
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/btnNavCaiDat"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/tc_caidat" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tài khoản"
-                android:textSize="11sp"
-                android:textColor="#555555" />
 
         </LinearLayout>
 
 
     </LinearLayout>
-
-</LinearLayout>
