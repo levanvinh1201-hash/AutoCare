@@ -1,36 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="#FFFFFF"
-    android:padding="24dp">
+    android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/tvLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🚗"
-        android:textSize="70sp"
-        android:gravity="center" />
+    <!-- Ảnh nền -->
+    <ImageView
+        android:id="@+id/ivMainCar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/main_car"
+        android:scaleType="centerCrop"
+        android:alpha="0.65"
+        android:contentDescription="Ảnh nền AutoCare" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="AutoCare"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="#1976D2" />
+    <!-- Nội dung hiển thị đè lên ảnh nền -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Chăm sóc xe của bạn"
-        android:textSize="16sp"
-        android:textColor="#666666" />
+        <!-- Tên ứng dụng -->
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AUTOCARE"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textColor="#000055"
+            android:gravity="center" />
 
-</LinearLayout>
+        <!-- Khẩu hiệu -->
+        <TextView
+            android:id="@+id/tvSlogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Chăm sóc xe hơi của bạn"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000088"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+</FrameLayout>
