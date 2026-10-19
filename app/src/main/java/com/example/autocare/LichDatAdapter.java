@@ -417,7 +417,6 @@ public class LichDatAdapter extends RecyclerView.Adapter<LichDatAdapter.LichDatV
         TextView txtNgay;
         TextView txtGio;
         TextView txtGhiChu;
-
         Button btnHuyLich;
 
         public LichDatViewHolder(

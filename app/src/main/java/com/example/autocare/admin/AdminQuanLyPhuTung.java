@@ -145,10 +145,13 @@ public class AdminQuanLyPhuTung extends AppCompatActivity {
                                                 "ten"
                                         );
 
-                                String gia =
-                                        document.getString(
-                                                "gia"
-                                        );
+
+                                Object giaObject = document.get("gia");
+
+                                String gia = giaObject != null
+                                        ? String.valueOf(giaObject)
+                                        : "0";
+
 
                                 String hinhAnh =
                                         document.getString(
