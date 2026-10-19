@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +37,9 @@ public class TrangChu extends AppCompatActivity {
     RecyclerView recyclerPhuTung;
 
     View btnNavLich;
-    View btnNavDichVu;
-    View btnNavPhuTung;
+    View btnNavTrangChu;
+    View btnNavXeCuaToi;
+    View btnNavDaiLy;
     View btnNavTaiKhoan;
 
     FirebaseAuth firebaseAuth;
@@ -73,10 +75,11 @@ public class TrangChu extends AppCompatActivity {
         sectionPhuTung = findViewById(R.id.sectionPhuTung);
 
         btnNavLich = findViewById(R.id.btnNavLich);
-        btnNavDichVu = findViewById(R.id.btnNavDichVu);
-        btnNavPhuTung = findViewById(R.id.btnNavPhuTung);
+        btnNavTrangChu = findViewById(R.id.btnNavTrangChu);
+        btnNavXeCuaToi = findViewById(R.id.btnNavXeCuaToi);
+        btnNavDaiLy = findViewById(R.id.btnNavDaiLy);
         btnNavTaiKhoan = findViewById(R.id.btnNavTaiKhoan);
-
+        ScrollView scrollTrangChu = findViewById(R.id.scrollTrangChu);
         // =========================
         // FIREBASE
         // =========================
@@ -202,30 +205,36 @@ public class TrangChu extends AppCompatActivity {
         });
 
         // =========================
-        // TASKBAR - DỊCH VỤ
+        // TASKBAR - TRANG CHỦ
         // =========================
-
-        btnNavDichVu.setOnClickListener(v ->
-                sectionDichVu.requestFocus()
+        btnNavTrangChu.setOnClickListener(v ->
+                scrollTrangChu.smoothScrollTo(0, 0)
         );
 
         // =========================
-        // TASKBAR - PHỤ TÙNG
+        // TASKBAR - XE CỦA TÔI
         // =========================
+        btnNavXeCuaToi.setOnClickListener(v -> {
+            Intent intent = new Intent(TrangChu.this, XeCuaToi.class);
+            startActivity(intent);
+        });
 
-        btnNavPhuTung.setOnClickListener(v ->
-                sectionPhuTung.requestFocus()
-        );
-        // TASKBAR - TÀI KHOẢN
+        // =========================
+        // TASKBAR - ĐẠI LÝ
+        // =========================
+        btnNavDaiLy.setOnClickListener(v -> {
+            Intent intent = new Intent(TrangChu.this, DaiLyActivity.class);
+            startActivity(intent);
+        });
 
+        // =========================
+        // TASKBAR - TÀI KHOẢN (SẼ LÀM SAU)
+        // =========================
         btnNavTaiKhoan.setOnClickListener(v -> {
-
-            Intent intent =
-                    new Intent(
-                            TrangChu.this,
-                            XeCuaToi.class
-                    );
-
+            Intent intent = new Intent(
+                    TrangChu.this,
+                    TaiKhoanActivity.class
+            );
             startActivity(intent);
         });
     }
@@ -338,8 +347,10 @@ public class TrangChu extends AppCompatActivity {
                                 String tenDichVu =
                                         document.getString("name");
 
-                                String gia =
-                                        document.getString("giá tiền");
+                                Object giaObject = document.get("giá tiền");
+
+                                String gia = giaObject == null
+                                        ? null : String.valueOf(giaObject);
 
                                 if (tenDichVu == null) {
                                     tenDichVu =
