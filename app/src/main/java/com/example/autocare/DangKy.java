@@ -164,5 +164,23 @@ public class DangKy extends AppCompatActivity {
                         ).show();
                     }
                 });
+
+
+        findViewById(R.id.btnDangKyGoogle).setOnClickListener(v -> {
+            Toast.makeText(
+                    this,
+                    "Đang chuẩn bị chức năng đăng ký Google",
+                    Toast.LENGTH_SHORT
+            ).show();
+        });
+
+        findViewById(R.id.btnDangKySoDienThoai).setOnClickListener(v -> {
+            Toast.makeText(
+                    this,
+                    "Đang chuẩn bị chức năng đăng ký bằng số điện thoại",
+                    Toast.LENGTH_SHORT
+            ).show();
+        });
+
     }
 }

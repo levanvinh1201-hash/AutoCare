@@ -535,10 +535,69 @@ public class TrangChu extends AppCompatActivity {
                     querySnapshot.getDocuments()
                             .forEach(document -> {
 
-                                PhuTung phuTung =
-                                        document.toObject(
-                                                PhuTung.class
+
+                                PhuTung phuTung = new PhuTung();
+
+                                phuTung.setPhuTungId(document.getId());
+
+                                phuTung.setTen(
+                                        document.getString("ten") != null
+                                                ? document.getString("ten")
+                                                : ""
+                                );
+
+                                Object giaObject = document.get("gia");
+
+                                phuTung.setGia(
+                                        giaObject != null
+                                                ? String.valueOf(giaObject)
+                                                : "0"
+                                );
+
+                                phuTung.setHinhAnh(
+                                        document.getString("hinhAnh") != null
+                                                ? document.getString("hinhAnh")
+                                                : ""
+                                );
+
+                                phuTung.setMoTa(
+                                        document.getString("moTa") != null
+                                                ? document.getString("moTa")
+                                                : ""
+                                );
+
+                                Object soLuongObject = document.get("soLuong");
+
+                                int soLuong = 0;
+
+                                if (soLuongObject instanceof Number) {
+                                    soLuong = ((Number) soLuongObject).intValue();
+                                } else if (soLuongObject instanceof String) {
+                                    try {
+                                        soLuong = Integer.parseInt(
+                                                ((String) soLuongObject).trim()
                                         );
+                                    } catch (NumberFormatException e) {
+                                        soLuong = 0;
+                                    }
+                                }
+
+                                phuTung.setSoLuong(soLuong);
+
+                                Object conHangObject = document.get("conHang");
+
+                                boolean conHang = false;
+
+                                if (conHangObject instanceof Boolean) {
+                                    conHang = (Boolean) conHangObject;
+                                } else if (conHangObject instanceof String) {
+                                    conHang = Boolean.parseBoolean(
+                                            (String) conHangObject
+                                    );
+                                }
+
+                                phuTung.setConHang(conHang);
+
 
                                 if (phuTung != null) {
 
