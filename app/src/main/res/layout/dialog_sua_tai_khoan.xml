@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- HỌ TÊN -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Họ và tên"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#374151"/>
+
+    <EditText
+        android:id="@+id/edtSuaHoTen"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="6dp"
+        android:hint="Nhập họ và tên"
+        android:inputType="textPersonName"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"/>
+
+
+    <!-- QUYỀN -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quyền tài khoản"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#374151"
+        android:layout_marginTop="18dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerSuaRole"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="6dp"/>
+
+</LinearLayout>
