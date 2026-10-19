@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="#F5F7FB">
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:fillViewport="true"
+        android:clipToPadding="false">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="190dp"
+                android:background="@drawable/bg_taikhoan_header" android:padding="22dp"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="◈  AutoCare" android:textColor="#FFFFFF"
+                    android:textStyle="bold" android:textSize="17sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Tài khoản" android:textColor="#FFFFFF" android:textStyle="bold"
+                    android:textSize="28sp" android:layout_marginTop="20dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Quản lý thông tin và lịch hẹn của bạn"
+                    android:textColor="#D7E8FF" android:textSize="13sp" android:layout_marginTop="6dp"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:paddingStart="16dp" android:paddingEnd="16dp"
+                android:layout_marginTop="-36dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="@drawable/bg_taikhoan_card" android:elevation="5dp"
+                    android:padding="16dp" android:gravity="center_vertical" android:orientation="horizontal">
+                    <TextView android:layout_width="64dp" android:layout_height="64dp"
+                        android:background="@drawable/bg_taikhoan_avatar" android:text="👤"
+                        android:textSize="30sp" android:gravity="center"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+                        <TextView android:id="@+id/tvTenTaiKhoan"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="Đang tải..." android:textStyle="bold" android:textSize="18sp"
+                            android:textColor="#192B4B"/>
+                        <TextView android:id="@+id/tvEmailTaiKhoan"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="" android:textSize="12sp" android:textColor="#68778F"
+                            android:layout_marginTop="5dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="★  Thành viên AutoCare" android:textColor="#F18A17"
+                            android:textSize="12sp" android:layout_marginTop="8dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="Quản lý tài khoản" android:textStyle="bold" android:textSize="17sp"
+                    android:textColor="#192B4B" android:layout_marginTop="28dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <LinearLayout android:id="@+id/btnThongTinCaNhan"
+                    android:layout_width="match_parent" android:layout_height="62dp"
+                    android:background="@drawable/bg_taikhoan_card" android:elevation="2dp"
+                    android:gravity="center_vertical" android:orientation="horizontal"
+                    android:paddingStart="16dp" android:paddingEnd="16dp"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="38dp" android:layout_height="38dp"
+                        android:background="@drawable/bg_taikhoan_avatar" android:text="●"
+                        android:textColor="#FFFFFF" android:gravity="center" android:textSize="20sp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="14dp"
+                        android:text="Thông tin cá nhân" android:textStyle="bold"
+                        android:textColor="#25314A" android:textSize="15sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="#7E8A9B" android:textSize="28sp"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/btnLichSuTaiKhoan"
+                    android:layout_width="match_parent" android:layout_height="62dp"
+                    android:layout_marginTop="12dp" android:background="@drawable/bg_taikhoan_card"
+                    android:elevation="2dp" android:gravity="center_vertical"
+                    android:orientation="horizontal" android:paddingStart="16dp" android:paddingEnd="16dp"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="38dp" android:layout_height="38dp"
+                        android:background="@drawable/bg_taikhoan_avatar" android:text="▦"
+                        android:textColor="#FFFFFF" android:gravity="center" android:textSize="20sp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="14dp"
+                        android:text="Lịch sử đặt lịch" android:textStyle="bold"
+                        android:textColor="#25314A" android:textSize="15sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="#7E8A9B" android:textSize="28sp"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/btnCaiDatTaiKhoan"
+                    android:layout_width="match_parent" android:layout_height="62dp"
+                    android:layout_marginTop="12dp" android:background="@drawable/bg_taikhoan_card"
+                    android:elevation="2dp" android:gravity="center_vertical"
+                    android:orientation="horizontal" android:paddingStart="16dp" android:paddingEnd="16dp"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="38dp" android:layout_height="38dp"
+                        android:background="@drawable/bg_taikhoan_avatar" android:text="⚙"
+                        android:textColor="#FFFFFF" android:gravity="center" android:textSize="23sp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="14dp"
+                        android:text="Cài đặt" android:textStyle="bold"
+                        android:textColor="#25314A" android:textSize="15sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="#7E8A9B" android:textSize="28sp"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/btnDangXuatTaiKhoan"
+                    android:layout_width="match_parent" android:layout_height="62dp"
+                    android:layout_marginTop="12dp" android:background="@drawable/bg_taikhoan_card"
+                    android:elevation="2dp" android:gravity="center_vertical"
+                    android:orientation="horizontal" android:paddingStart="16dp" android:paddingEnd="16dp"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="38dp" android:layout_height="38dp"
+                        android:background="@drawable/bg_taikhoan_logout" android:text="➜"
+                        android:textColor="#FFFFFF" android:gravity="center" android:textSize="21sp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="14dp"
+                        android:text="Đăng xuất" android:textStyle="bold"
+                        android:textColor="#25314A" android:textSize="15sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="#7E8A9B" android:textSize="28sp"/>
+                </LinearLayout>
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="AutoCare • Đồng hành cùng chiếc xe của bạn"
+                    android:gravity="center" android:textColor="#9BA5B5" android:textSize="12sp"
+                    android:layout_marginTop="24dp" android:layout_marginBottom="24dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="68dp"
+        android:background="@drawable/bg_taikhoan_bottom" android:orientation="horizontal"
+        android:gravity="center_vertical" android:paddingStart="4dp" android:paddingEnd="4dp">
+        <LinearLayout android:id="@+id/btnNavTrangChu" style="@style/TaiKhoanNavItem">
+            <ImageView style="@style/TaiKhoanNavIcon" android:src="@drawable/tc_trangchu"/>
+            <TextView style="@style/TaiKhoanNavLabel" android:text="Trang chủ"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/btnNavLich" style="@style/TaiKhoanNavItem">
+            <ImageView style="@style/TaiKhoanNavIcon" android:src="@drawable/tc_datlich"/>
+            <TextView style="@style/TaiKhoanNavLabel" android:text="Đặt lịch"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/btnNavXeCuaToi" style="@style/TaiKhoanNavItem">
+            <ImageView style="@style/TaiKhoanNavIcon" android:src="@drawable/tc_xe"/>
+            <TextView style="@style/TaiKhoanNavLabel" android:text="Xe của tôi"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/btnNavDaiLy" style="@style/TaiKhoanNavItem">
+            <ImageView style="@style/TaiKhoanNavIcon" android:src="@drawable/tc_daily"/>
+            <TextView style="@style/TaiKhoanNavLabel" android:text="Đại lý"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/btnNavTaiKhoan" style="@style/TaiKhoanNavItem">
+            <ImageView style="@style/TaiKhoanNavIcon" android:src="@drawable/tc_taikhoan"/>
+            <TextView style="@style/TaiKhoanNavLabel" android:text="Tài khoản"
+                android:textColor="#FFB34A" android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
