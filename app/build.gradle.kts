@@ -46,4 +46,5 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("com.google.android.gms:play-services-maps:19.2.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

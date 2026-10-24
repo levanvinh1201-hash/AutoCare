@@ -12,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+import android.content.Intent;
 
 public class PhuTungAdapter
         extends RecyclerView.Adapter<PhuTungAdapter.ViewHolder> {
@@ -72,16 +76,54 @@ public class PhuTungAdapter
         // GIÁ
         // =========================
 
-        String gia =
-                phuTung.getGia();
+//        String gia =
+//                phuTung.getGia();
+//
+//        if (gia == null || gia.isEmpty()) {
+//            gia = "Liên hệ";
+//        } else {
+//            gia = gia + " VNĐ";
+//        }
+//
+//        holder.txtGia.setText(gia);
+        // =========================
+// GIÁ TIỀN
+// =========================
 
-        if (gia == null || gia.isEmpty()) {
-            gia = "Liên hệ";
+        String gia = phuTung.getGia();
+
+        if (gia == null || gia.trim().isEmpty()) {
+            holder.txtGia.setText("Liên hệ");
         } else {
-            gia = gia + " VNĐ";
-        }
+            try {
+                // Loại bỏ dấu phân cách nếu giá đã được định dạng
+                String giaSo = gia.trim()
+                        .replace(".", "")
+                        .replace(",", "")
+                        .replace(" ", "");
 
-        holder.txtGia.setText(gia);
+                // Chuyển giá sang số
+                long giaTri = Long.parseLong(giaSo);
+
+                // Định dạng dấu chấm hàng nghìn theo kiểu Việt Nam
+                DecimalFormatSymbols symbols =
+                        new DecimalFormatSymbols(Locale.US);
+                symbols.setGroupingSeparator('.');
+
+                DecimalFormat formatter =
+                        new DecimalFormat("#,###", symbols);
+
+                formatter.setGroupingUsed(true);
+                formatter.setMaximumFractionDigits(0);
+
+                holder.txtGia.setText(
+                        formatter.format(giaTri) + " VNĐ"
+                );
+
+            } catch (NumberFormatException e) {
+                holder.txtGia.setText(gia + " VNĐ");
+            }
+        }
 
         // =========================
         // SỐ LƯỢNG
@@ -149,6 +191,23 @@ public class PhuTungAdapter
                 );
             }
         }
+        // Nhấn vào phụ tùng để xem chi tiết
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    context,
+                    ChiTietPhuTungActivity.class
+            );
+
+            intent.putExtra("phuTungId", phuTung.getPhuTungId());
+            intent.putExtra("ten", phuTung.getTen());
+            intent.putExtra("gia", phuTung.getGia());
+            intent.putExtra("hinhAnh", phuTung.getHinhAnh());
+            intent.putExtra("moTa", phuTung.getMoTa());
+            intent.putExtra("soLuong", phuTung.getSoLuong());
+            intent.putExtra("conHang", phuTung.isConHang());
+
+            context.startActivity(intent);
+        });
     }
 
     @Override

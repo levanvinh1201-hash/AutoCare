@@ -57,6 +57,28 @@ public class TrangChu extends AppCompatActivity {
 
         setContentView(R.layout.activity_trang_chu);
 
+        TextView tvXemTatCaPhuTung =
+                findViewById(R.id.tvXemTatCaPhuTung);
+
+        tvXemTatCaPhuTung.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    TrangChu.this,
+                    TatCaPhuTungActivity.class
+            );
+            startActivity(intent);
+        });
+        TextView btnXemTatCaDichVu =
+                findViewById(R.id.btnXemTatCaDichVu);
+
+        btnXemTatCaDichVu.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    TrangChu.this,
+                    TatCaDichVuActivity.class
+            );
+            startActivity(intent);
+        });
+
+
         // =========================
         // ÁNH XẠ GIAO DIỆN
         // =========================

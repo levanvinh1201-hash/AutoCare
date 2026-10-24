@@ -224,18 +224,17 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="G"
-                    android:textColor="#4285F4"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/google_logo"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Google logo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
                     android:text="Tiếp tục với Google"
                     android:textColor="#334155"
                     android:textSize="15sp"

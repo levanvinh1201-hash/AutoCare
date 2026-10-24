@@ -82,6 +82,15 @@
         <activity
             android:name=".TaiKhoanActivity"
             android:exported="false" />
+        <activity
+            android:name=".TatCaPhuTungActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChiTietPhuTungActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TatCaDichVuActivity"
+            android:exported="false" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

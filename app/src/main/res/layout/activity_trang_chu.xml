@@ -164,12 +164,16 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvXemTatCaPhuTung"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Xem tất cả  ›"
                         android:textColor="#1565C0"
                         android:textSize="13sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="8dp"/>
 
                 </LinearLayout>
 
@@ -256,15 +260,16 @@
             </LinearLayout>
 
             <!-- DỊCH VỤ -->
+
+            <!-- DỊCH VỤ PHỔ BIẾN -->
             <LinearLayout
                 android:id="@+id/sectionDichVu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
-                android:orientation="vertical"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="28dp"
+                android:orientation="vertical">
 
+                <!-- Tiêu đề và Xem tất cả cùng một hàng -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -272,8 +277,9 @@
                     android:gravity="center_vertical">
 
                     <TextView
+                        android:id="@+id/txtTieuDeDichVu"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Dịch vụ phổ biến"
                         android:textColor="#17212F"
@@ -281,23 +287,32 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/btnXemTatCaDichVu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="2dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:text="Xem tất cả  ›"
                         android:textColor="#1565C0"
                         android:textSize="13sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true" />
 
                 </LinearLayout>
 
+                <!-- Mô tả bên dưới -->
                 <TextView
+                    android:id="@+id/txtMoTaDichVu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Dịch vụ chăm sóc và bảo dưỡng xe"
-                    android:textColor="#64748B"
+                    android:textColor="#718096"
                     android:textSize="13sp" />
-
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -313,9 +328,7 @@
                         android:paddingBottom="6dp" />
 
                 </HorizontalScrollView>
-
             </LinearLayout>
-
         </LinearLayout>
 
     </ScrollView>
