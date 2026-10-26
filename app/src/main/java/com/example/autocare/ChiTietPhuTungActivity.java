@@ -1,4 +1,5 @@
 package com.example.autocare;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,7 +43,15 @@ public class ChiTietPhuTungActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_phu_tung);
+        Button btnDatLichPhuTung = findViewById(R.id.btnDatLichPhuTung);
 
+        btnDatLichPhuTung.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    ChiTietPhuTungActivity.this,
+                    DatLich.class
+            );
+            startActivity(intent);
+        });
         anhXa();
         db = FirebaseFirestore.getInstance();
 

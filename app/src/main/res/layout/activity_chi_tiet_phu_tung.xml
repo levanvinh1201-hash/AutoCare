@@ -94,6 +94,16 @@
                 android:textColor="#64748B"
                 android:textSize="14sp"
                 android:lineSpacingExtra="4dp" />
+            <Button
+                android:id="@+id/btnDatLichPhuTung"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:text="Đặt lịch"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1565C0" />
 
 
         </LinearLayout>
