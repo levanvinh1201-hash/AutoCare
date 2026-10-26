@@ -53,6 +53,7 @@ public class DatLich extends AppCompatActivity {
         setContentView(
                 R.layout.activity_dat_lich
         );
+        BottomNavHelper.setup(this);
 
         // =====================================================
         // NHẬN MÃ DỊCH VỤ TỪ TRANG CHỦ

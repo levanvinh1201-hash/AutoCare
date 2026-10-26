@@ -72,7 +72,9 @@ public class DaiLyActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_dai_ly);
+        BottomNavHelper.setup(this);
 
         db = FirebaseFirestore.getInstance();
 
@@ -84,14 +86,6 @@ public class DaiLyActivity extends FragmentActivity
         findViewById(R.id.btnQuayLaiDaiLy)
                 .setOnClickListener(v -> finish());
 
-        SupportMapFragment mapFragment =
-                (SupportMapFragment)
-                        getSupportFragmentManager()
-                                .findFragmentById(R.id.mapGara);
-
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
 
         edtTimGara.addTextChangedListener(new TextWatcher() {
             @Override
@@ -294,7 +288,7 @@ public class DaiLyActivity extends FragmentActivity
             if (gara.soDienThoai.isEmpty()) {
                 Toast.makeText(
                         this,
-                        "Gara chưa có số điện thoại",
+                        "0358143068",
                         Toast.LENGTH_SHORT
                 ).show();
                 return;

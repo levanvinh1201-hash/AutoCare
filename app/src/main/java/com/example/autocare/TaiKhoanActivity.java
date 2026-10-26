@@ -19,6 +19,7 @@ public class TaiKhoanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BottomNavHelper.setup(this);
         setContentView(R.layout.activity_tai_khoan);
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -28,10 +29,6 @@ public class TaiKhoanActivity extends AppCompatActivity {
         findViewById(R.id.btnThongTinCaNhan).setOnClickListener(v -> hienThongTinCaNhan());
         findViewById(R.id.btnLichSuTaiKhoan).setOnClickListener(v ->
                 startActivity(new Intent(this, LichSuDatLich.class)));
-        findViewById(R.id.btnCaiDatTaiKhoan).setOnClickListener(v ->
-                new AlertDialog.Builder(this).setTitle("Cài đặt AutoCare")
-                        .setMessage("Các tùy chọn cài đặt sẽ được bổ sung sau.")
-                        .setPositiveButton("Đóng", null).show());
         findViewById(R.id.btnDangXuatTaiKhoan).setOnClickListener(v -> xacNhanDangXuat());
         findViewById(R.id.btnNavTrangChu).setOnClickListener(v -> moManHinh(TrangChu.class));
         findViewById(R.id.btnNavLich).setOnClickListener(v -> moManHinh(DatLich.class));

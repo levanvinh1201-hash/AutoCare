@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.autocare.admin.AdminTrangChu;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestore;import android.util.Log;
 
 public class DangNhap extends AppCompatActivity {
 
@@ -158,9 +158,15 @@ public class DangNhap extends AppCompatActivity {
 
                                     btnDangNhap.setEnabled(true);
 
+                                    Log.e(
+                                            "FIREBASE_ERROR",
+                                            "Lỗi đọc thông tin tài khoản từ Firestore",
+                                            e
+                                    );
+
                                     Toast.makeText(
                                             DangNhap.this,
-                                            "Không thể tải thông tin tài khoản",
+                                            "Lỗi Firebase: " + e.getMessage(),
                                             Toast.LENGTH_LONG
                                     ).show();
                                 });

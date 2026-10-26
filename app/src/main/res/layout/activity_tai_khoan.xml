@@ -89,22 +89,7 @@
                         android:text="›" android:textColor="#7E8A9B" android:textSize="28sp"/>
                 </LinearLayout>
 
-                <LinearLayout android:id="@+id/btnCaiDatTaiKhoan"
-                    android:layout_width="match_parent" android:layout_height="62dp"
-                    android:layout_marginTop="12dp" android:background="@drawable/bg_taikhoan_card"
-                    android:elevation="2dp" android:gravity="center_vertical"
-                    android:orientation="horizontal" android:paddingStart="16dp" android:paddingEnd="16dp"
-                    android:clickable="true" android:focusable="true">
-                    <TextView android:layout_width="38dp" android:layout_height="38dp"
-                        android:background="@drawable/bg_taikhoan_avatar" android:text="⚙"
-                        android:textColor="#FFFFFF" android:gravity="center" android:textSize="23sp"/>
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:layout_marginStart="14dp"
-                        android:text="Cài đặt" android:textStyle="bold"
-                        android:textColor="#25314A" android:textSize="15sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="#7E8A9B" android:textSize="28sp"/>
-                </LinearLayout>
+
 
                 <LinearLayout android:id="@+id/btnDangXuatTaiKhoan"
                     android:layout_width="match_parent" android:layout_height="62dp"
