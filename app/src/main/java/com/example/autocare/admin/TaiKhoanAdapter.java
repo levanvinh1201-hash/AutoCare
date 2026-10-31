@@ -111,15 +111,7 @@ public class TaiKhoanAdapter
         // NÚT THÊM
         // =========================
 
-        holder.btnThemTaiKhoanItem.setOnClickListener(v -> {
 
-            Toast.makeText(
-                    v.getContext(),
-                    "Vui lòng sử dụng nút + Thêm tài khoản ở phía trên",
-                    Toast.LENGTH_SHORT
-            ).show();
-
-        });
 
 
         // =========================

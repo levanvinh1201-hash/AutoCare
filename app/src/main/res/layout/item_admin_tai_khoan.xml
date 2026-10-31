@@ -87,16 +87,6 @@
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#D32F2F"/>
-            <Button
-                android:id="@+id/btnThemTaiKhoan"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:text="thêm"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#2196F3"/>
-
         </LinearLayout>
 
     </LinearLayout>
