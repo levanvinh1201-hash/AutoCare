@@ -55,6 +55,8 @@ public class TrangChu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trang_chu);
+// kiem tra so dien thoai cua khach
+        KiemTraSoDienThoai.kiemTra(this);
 
         TextView tvXemTatCaPhuTung =
                 findViewById(R.id.tvXemTatCaPhuTung);

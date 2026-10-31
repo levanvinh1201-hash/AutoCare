@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">autocare</string>
     <string name="google_maps_key">DAN_API_KEY_VAO_DAY</string>
+    <string name="google_web_client_id">679499666846-df79t13bfd3l12pat64sqh9v04gqo9jv.apps.googleusercontent.com</string>
 </resources>

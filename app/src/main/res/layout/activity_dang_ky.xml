@@ -241,34 +241,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- SỐ ĐIỆN THOẠI -->
-            <LinearLayout
-                android:id="@+id/btnDangKySoDienThoai"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_register_social"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="☎"
-                    android:textColor="#1976D2"
-                    android:textSize="23sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:text="Tiếp tục với số điện thoại"
-                    android:textColor="#334155"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
 
         </LinearLayout>
 
