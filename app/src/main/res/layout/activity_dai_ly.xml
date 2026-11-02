@@ -129,17 +129,6 @@
                         android:textSize="14sp"
                         android:layout_marginTop="8dp" />
 
-                    <!-- NÚT GOOGLE MAPS -->
-                    <Button
-                        android:id="@+id/btnMoGoogleMaps"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="18dp"
-                        android:text="📍 Xem vị trí trên Google Maps"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:backgroundTint="#1565C0" />
 
                 </LinearLayout>
 
