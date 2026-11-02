@@ -1,9 +1,11 @@
+
 package com.example.autocare.admin;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.text.InputType;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,22 +22,21 @@ import com.example.autocare.PhuTung;
 import com.example.autocare.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class AdminPhuTungAdapter
         extends RecyclerView.Adapter<AdminPhuTungAdapter.PhuTungViewHolder> {
 
     private final ArrayList<PhuTung> danhSachPhuTung;
     private final FirebaseFirestore firestore;
-    private final Context context;
 
-    public AdminPhuTungAdapter(
-            ArrayList<PhuTung> danhSachPhuTung) {
-
+    public AdminPhuTungAdapter(ArrayList<PhuTung> danhSachPhuTung) {
         this.danhSachPhuTung = danhSachPhuTung;
         this.firestore = FirebaseFirestore.getInstance();
-        this.context = null;
     }
 
     @NonNull
@@ -44,13 +45,8 @@ public class AdminPhuTungAdapter
             @NonNull ViewGroup parent,
             int viewType) {
 
-        View view =
-                LayoutInflater.from(parent.getContext())
-                        .inflate(
-                                R.layout.item_admin_phu_tung,
-                                parent,
-                                false
-                        );
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_admin_phu_tung, parent, false);
 
         return new PhuTungViewHolder(view);
     }
@@ -60,12 +56,7 @@ public class AdminPhuTungAdapter
             @NonNull PhuTungViewHolder holder,
             int position) {
 
-        PhuTung phuTung =
-                danhSachPhuTung.get(position);
-
-        // =====================================================
-        // TÊN
-        // =====================================================
+        PhuTung phuTung = danhSachPhuTung.get(position);
 
         String ten = phuTung.getTen();
 
@@ -75,69 +66,145 @@ public class AdminPhuTungAdapter
 
         holder.txtAdminTenPhuTung.setText(ten);
 
-        // =====================================================
-        // GIÁ
-        // =====================================================
-
-        String gia = phuTung.getGia();
-
-        if (gia == null || gia.isEmpty()) {
-            gia = "0";
-        }
-
+        // ĐỊNH DẠNG GIÁ KHI HIỂN THỊ
         holder.txtAdminGiaPhuTung.setText(
-                gia + "đ"
+                dinhDangGia(phuTung.getGia()) + "đ"
         );
-
-        // =====================================================
-        // SỐ LƯỢNG
-        // =====================================================
 
         holder.txtAdminSoLuongPhuTung.setText(
                 "Số lượng: " + phuTung.getSoLuong()
         );
-
-        // =====================================================
-        // TRẠNG THÁI
-        // =====================================================
 
         hienThiTrangThai(
                 holder.txtAdminTrangThaiPhuTung,
                 phuTung.isConHang()
         );
 
-        // =====================================================
-        // ẢNH
-        // =====================================================
-
         hienThiAnh(
                 holder.imgAdminPhuTung,
                 phuTung.getHinhAnh()
         );
 
-        // =====================================================
-        // NÚT SỬA
-        // =====================================================
+        holder.btnSuaPhuTung.setOnClickListener(v -> {
+            int viTri = holder.getBindingAdapterPosition();
 
-        holder.btnSuaPhuTung.setOnClickListener(
-                v -> hienThiDialogSua(
+            if (viTri != RecyclerView.NO_POSITION) {
+                hienThiDialogSua(
                         v.getContext(),
                         phuTung,
-                        holder.getBindingAdapterPosition()
-                )
-        );
+                        viTri
+                );
+            }
+        });
 
-        // =====================================================
-        // NÚT XÓA
-        // =====================================================
+        holder.btnXoaPhuTung.setOnClickListener(v -> {
+            int viTri = holder.getBindingAdapterPosition();
 
-        holder.btnXoaPhuTung.setOnClickListener(
-                v -> hienThiDialogXoa(
+            if (viTri != RecyclerView.NO_POSITION) {
+                hienThiDialogXoa(
                         v.getContext(),
                         phuTung,
-                        holder.getBindingAdapterPosition()
-                )
-        );
+                        viTri
+                );
+            }
+        });
+    }
+
+    // =========================================================
+    // CHUẨN HÓA GIÁ VỀ CHỈ CÒN CHỮ SỐ
+    // =========================================================
+
+    private String layChuSo(String gia) {
+        if (gia == null || gia.trim().isEmpty()) {
+            return "0";
+        }
+
+        String chuSo = gia.replaceAll("[^0-9]", "");
+
+        return chuSo.isEmpty() ? "0" : chuSo;
+    }
+
+    // =========================================================
+    // ĐỊNH DẠNG GIÁ: 400000 -> 400.000
+    // =========================================================
+
+    private String dinhDangGia(String gia) {
+        if (gia == null || gia.trim().isEmpty()) {
+            return "0";
+        }
+
+        try {
+            long soTien = Long.parseLong(layChuSo(gia));
+
+            DecimalFormatSymbols symbols =
+                    new DecimalFormatSymbols(Locale.US);
+
+            symbols.setGroupingSeparator('.');
+
+            DecimalFormat formatter =
+                    new DecimalFormat("#,###", symbols);
+
+            formatter.setGroupingUsed(true);
+
+            return formatter.format(soTien);
+
+        } catch (NumberFormatException e) {
+            return gia;
+        }
+    }
+
+    // =========================================================
+    // TỰ ĐỘNG ĐỊNH DẠNG KHI NHẬP GIÁ
+    // =========================================================
+
+    private void tuDongDinhDangTien(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+
+            private boolean dangSua = false;
+
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(
+                    CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (dangSua) {
+                    return;
+                }
+
+                dangSua = true;
+
+                String chuSo = s.toString().replaceAll("[^0-9]", "");
+
+                if (chuSo.isEmpty()) {
+                    editText.setText("");
+                    dangSua = false;
+                    return;
+                }
+
+                try {
+                    long soTien = Long.parseLong(chuSo);
+
+                    String giaMoi = dinhDangGia(
+                            String.valueOf(soTien)
+                    );
+
+                    editText.setText(giaMoi);
+                    editText.setSelection(editText.length());
+
+                } catch (NumberFormatException e) {
+                    // Nếu vượt giới hạn long thì không định dạng lại.
+                }
+
+                dangSua = false;
+            }
+        });
     }
 
     // =========================================================
@@ -148,33 +215,24 @@ public class AdminPhuTungAdapter
             ImageView imageView,
             String tenHinhAnh) {
 
-        // Reset ảnh trước khi bind item mới
         imageView.setImageResource(
                 R.drawable.ic_launcher_foreground
         );
 
-        if (tenHinhAnh == null ||
-                tenHinhAnh.trim().isEmpty()) {
-
+        if (tenHinhAnh == null || tenHinhAnh.trim().isEmpty()) {
             return;
         }
 
-        Context context =
-                imageView.getContext();
+        Context context = imageView.getContext();
 
-        int resourceId =
-                context.getResources()
-                        .getIdentifier(
-                                tenHinhAnh,
-                                "drawable",
-                                context.getPackageName()
-                        );
+        int resourceId = context.getResources().getIdentifier(
+                tenHinhAnh,
+                "drawable",
+                context.getPackageName()
+        );
 
         if (resourceId != 0) {
-
-            imageView.setImageResource(
-                    resourceId
-            );
+            imageView.setImageResource(resourceId);
         }
     }
 
@@ -187,24 +245,11 @@ public class AdminPhuTungAdapter
             boolean conHang) {
 
         if (conHang) {
-
-            textView.setText(
-                    "🟢 Còn hàng"
-            );
-
-            textView.setTextColor(
-                    Color.parseColor("#2E7D32")
-            );
-
+            textView.setText("🟢 Còn hàng");
+            textView.setTextColor(Color.parseColor("#2E7D32"));
         } else {
-
-            textView.setText(
-                    "🔴 Hết hàng"
-            );
-
-            textView.setTextColor(
-                    Color.parseColor("#C62828")
-            );
+            textView.setText("🔴 Hết hàng");
+            textView.setTextColor(Color.parseColor("#C62828"));
         }
     }
 
@@ -217,313 +262,139 @@ public class AdminPhuTungAdapter
             PhuTung phuTung,
             int position) {
 
-        View view =
-                LayoutInflater.from(context)
-                        .inflate(
-                                R.layout.dialog_them_phu_tung,
-                                null
-                        );
-
-        EditText edtTen =
-                view.findViewById(
-                        R.id.edtTenPhuTung
-                );
-
-        EditText edtGia =
-                view.findViewById(
-                        R.id.edtGiaPhuTung
-                );
-
-        EditText edtHinhAnh =
-                view.findViewById(
-                        R.id.edtHinhAnhPhuTung
-                );
-
-        EditText edtMoTa =
-                view.findViewById(
-                        R.id.edtMoTaPhuTung
-                );
-
-        EditText edtSoLuong =
-                view.findViewById(
-                        R.id.edtSoLuongPhuTung
-                );
-
-        // =====================================================
-        // ĐIỀN DỮ LIỆU CŨ
-        // =====================================================
-
-        edtTen.setText(
-                phuTung.getTen()
-        );
-
-        edtGia.setText(
-                phuTung.getGia()
-        );
-
-        edtHinhAnh.setText(
-                phuTung.getHinhAnh()
-        );
-
-        edtMoTa.setText(
-                phuTung.getMoTa()
-        );
-
-        edtSoLuong.setText(
-                String.valueOf(
-                        phuTung.getSoLuong()
-                )
-        );
-
-        // =====================================================
-        // DIALOG
-        // =====================================================
-
-        AlertDialog dialog =
-                new AlertDialog.Builder(context)
-                        .setTitle("Sửa phụ tùng")
-                        .setView(view)
-                        .setNegativeButton(
-                                "Hủy",
-                                null
-                        )
-                        .setPositiveButton(
-                                "Lưu",
-                                null
-                        )
-                        .create();
-
-        dialog.setOnShowListener(
-                d -> {
-
-                    Button btnLuu =
-                            dialog.getButton(
-                                    AlertDialog.BUTTON_POSITIVE
-                            );
-
-                    btnLuu.setOnClickListener(
-                            v -> {
-
-                                String ten =
-                                        edtTen.getText()
-                                                .toString()
-                                                .trim();
-
-                                String gia =
-                                        edtGia.getText()
-                                                .toString()
-                                                .trim();
-
-                                String hinhAnh =
-                                        edtHinhAnh.getText()
-                                                .toString()
-                                                .trim();
-
-                                String moTa =
-                                        edtMoTa.getText()
-                                                .toString()
-                                                .trim();
-
-                                String soLuongText =
-                                        edtSoLuong.getText()
-                                                .toString()
-                                                .trim();
-
-                                // =========================
-                                // KIỂM TRA
-                                // =========================
-
-                                if (ten.isEmpty()) {
-
-                                    edtTen.setError(
-                                            "Vui lòng nhập tên phụ tùng"
-                                    );
-
-                                    edtTen.requestFocus();
-
-                                    return;
-                                }
-
-                                if (gia.isEmpty()) {
-
-                                    edtGia.setError(
-                                            "Vui lòng nhập giá"
-                                    );
-
-                                    edtGia.requestFocus();
-
-                                    return;
-                                }
-
-                                if (soLuongText.isEmpty()) {
-
-                                    edtSoLuong.setError(
-                                            "Vui lòng nhập số lượng"
-                                    );
-
-                                    edtSoLuong.requestFocus();
-
-                                    return;
-                                }
-
-                                int soLuong;
-
-                                try {
-
-                                    soLuong =
-                                            Integer.parseInt(
-                                                    soLuongText
-                                            );
-
-                                } catch (Exception e) {
-
-                                    edtSoLuong.setError(
-                                            "Số lượng không hợp lệ"
-                                    );
-
-                                    edtSoLuong.requestFocus();
-
-                                    return;
-                                }
-
-                                if (soLuong < 0) {
-
-                                    edtSoLuong.setError(
-                                            "Số lượng không được âm"
-                                    );
-
-                                    edtSoLuong.requestFocus();
-
-                                    return;
-                                }
-
-                                // =========================
-                                // TỰ XÁC ĐỊNH TRẠNG THÁI
-                                // =========================
-
-                                boolean conHang =
-                                        soLuong > 0;
-
-                                btnLuu.setEnabled(false);
-
-                                // =========================
-                                // DỮ LIỆU CẬP NHẬT
-                                // =========================
-
-                                HashMap<String, Object>
-                                        duLieu =
-                                        new HashMap<>();
-
-                                duLieu.put(
-                                        "ten",
-                                        ten
-                                );
-
-                                duLieu.put(
-                                        "gia",
-                                        gia
-                                );
-
-                                duLieu.put(
-                                        "hinhAnh",
-                                        hinhAnh
-                                );
-
-                                duLieu.put(
-                                        "moTa",
-                                        moTa
-                                );
-
-                                duLieu.put(
-                                        "soLuong",
-                                        soLuong
-                                );
-
-                                duLieu.put(
-                                        "conHang",
-                                        conHang
-                                );
-
-                                // =========================
-                                // UPDATE FIRESTORE
-                                // =========================
-
-                                firestore
-                                        .collection(
-                                                "spare_parts"
-                                        )
-                                        .document(
-                                                phuTung.getPhuTungId()
-                                        )
-                                        .update(
-                                                duLieu
-                                        )
-                                        .addOnSuccessListener(
-                                                unused -> {
-
-                                                    // Cập nhật
-                                                    // object hiện tại
-
-                                                    phuTung.setTen(
-                                                            ten
-                                                    );
-
-                                                    phuTung.setGia(
-                                                            gia
-                                                    );
-
-                                                    phuTung.setHinhAnh(
-                                                            hinhAnh
-                                                    );
-
-                                                    phuTung.setMoTa(
-                                                            moTa
-                                                    );
-
-                                                    phuTung.setSoLuong(
-                                                            soLuong
-                                                    );
-
-                                                    phuTung.setConHang(
-                                                            conHang
-                                                    );
-
-                                                    if (position >= 0 &&
-                                                            position < danhSachPhuTung.size()) {
-
-                                                        notifyItemChanged(
-                                                                position
-                                                        );
-                                                    }
-
-                                                    Toast.makeText(
-                                                            context,
-                                                            "Cập nhật phụ tùng thành công!",
-                                                            Toast.LENGTH_SHORT
-                                                    ).show();
-
-                                                    dialog.dismiss();
-                                                }
-                                        )
-                                        .addOnFailureListener(
-                                                e -> {
-
-                                                    btnLuu.setEnabled(
-                                                            true
-                                                    );
-
-                                                    Toast.makeText(
-                                                            context,
-                                                            "Cập nhật thất bại: "
-                                                                    + e.getMessage(),
-                                                            Toast.LENGTH_LONG
-                                                    ).show();
-                                                }
-                                        );
-                            }
-                    );
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.dialog_them_phu_tung, null);
+
+        EditText edtTen = view.findViewById(R.id.edtTenPhuTung);
+        EditText edtGia = view.findViewById(R.id.edtGiaPhuTung);
+        EditText edtHinhAnh = view.findViewById(R.id.edtHinhAnhPhuTung);
+        EditText edtMoTa = view.findViewById(R.id.edtMoTaPhuTung);
+        EditText edtSoLuong = view.findViewById(R.id.edtSoLuongPhuTung);
+
+        edtTen.setText(phuTung.getTen());
+
+        // Đặt giá cũ trước, sau đó mới gắn TextWatcher
+        edtGia.setText(dinhDangGia(phuTung.getGia()));
+        tuDongDinhDangTien(edtGia);
+
+        edtHinhAnh.setText(phuTung.getHinhAnh());
+        edtMoTa.setText(phuTung.getMoTa());
+        edtSoLuong.setText(String.valueOf(phuTung.getSoLuong()));
+
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle("Sửa phụ tùng")
+                .setView(view)
+                .setNegativeButton("Hủy", null)
+                .setPositiveButton("Lưu", null)
+                .create();
+
+        dialog.setOnShowListener(d -> {
+            Button btnLuu = dialog.getButton(
+                    AlertDialog.BUTTON_POSITIVE
+            );
+
+            btnLuu.setOnClickListener(v -> {
+                String ten = edtTen.getText().toString().trim();
+
+                // Xóa dấu chấm trước khi lưu
+                String gia = edtGia.getText().toString()
+                        .replace(".", "")
+                        .trim();
+
+                String hinhAnh = edtHinhAnh.getText().toString().trim();
+                String moTa = edtMoTa.getText().toString().trim();
+                String soLuongText = edtSoLuong.getText().toString().trim();
+
+                if (ten.isEmpty()) {
+                    edtTen.setError("Vui lòng nhập tên phụ tùng");
+                    edtTen.requestFocus();
+                    return;
                 }
-        );
+
+                if (gia.isEmpty()) {
+                    edtGia.setError("Vui lòng nhập giá");
+                    edtGia.requestFocus();
+                    return;
+                }
+
+                if (soLuongText.isEmpty()) {
+                    edtSoLuong.setError("Vui lòng nhập số lượng");
+                    edtSoLuong.requestFocus();
+                    return;
+                }
+
+                int soLuong;
+
+                try {
+                    soLuong = Integer.parseInt(soLuongText);
+                } catch (Exception e) {
+                    edtSoLuong.setError("Số lượng không hợp lệ");
+                    edtSoLuong.requestFocus();
+                    return;
+                }
+
+                if (soLuong < 0) {
+                    edtSoLuong.setError("Số lượng không được âm");
+                    edtSoLuong.requestFocus();
+                    return;
+                }
+
+                // Kiểm tra giá là số hợp lệ
+                try {
+                    Long.parseLong(gia);
+                } catch (NumberFormatException e) {
+                    edtGia.setError("Giá không hợp lệ");
+                    edtGia.requestFocus();
+                    return;
+                }
+
+                boolean conHang = soLuong > 0;
+
+                btnLuu.setEnabled(false);
+
+                HashMap<String, Object> duLieu = new HashMap<>();
+                duLieu.put("ten", ten);
+                duLieu.put("gia", gia);
+                duLieu.put("hinhAnh", hinhAnh);
+                duLieu.put("moTa", moTa);
+                duLieu.put("soLuong", soLuong);
+                duLieu.put("conHang", conHang);
+
+                firestore.collection("spare_parts")
+                        .document(phuTung.getPhuTungId())
+                        .update(duLieu)
+                        .addOnSuccessListener(unused -> {
+                            phuTung.setTen(ten);
+                            phuTung.setGia(gia);
+                            phuTung.setHinhAnh(hinhAnh);
+                            phuTung.setMoTa(moTa);
+                            phuTung.setSoLuong(soLuong);
+                            phuTung.setConHang(conHang);
+
+                            if (position >= 0 &&
+                                    position < danhSachPhuTung.size()) {
+                                notifyItemChanged(position);
+                            }
+
+                            Toast.makeText(
+                                    context,
+                                    "Cập nhật phụ tùng thành công!",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                            dialog.dismiss();
+                        })
+                        .addOnFailureListener(e -> {
+                            btnLuu.setEnabled(true);
+
+                            Toast.makeText(
+                                    context,
+                                    "Cập nhật thất bại: " + e.getMessage(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        });
+            });
+        });
 
         dialog.show();
     }
@@ -544,21 +415,9 @@ public class AdminPhuTungAdapter
                                 + phuTung.getTen()
                                 + "\" không?"
                 )
-                .setNegativeButton(
-                        "Hủy",
-                        null
-                )
-                .setPositiveButton(
-                        "Xóa",
-                        (dialog, which) -> {
-
-                            xoaPhuTung(
-                                    context,
-                                    phuTung,
-                                    position
-                            );
-                        }
-                )
+                .setNegativeButton("Hủy", null)
+                .setPositiveButton("Xóa", (dialog, which) ->
+                        xoaPhuTung(context, phuTung, position))
                 .show();
     }
 
@@ -571,73 +430,49 @@ public class AdminPhuTungAdapter
             PhuTung phuTung,
             int position) {
 
-        String phuTungId =
-                phuTung.getPhuTungId();
+        String phuTungId = phuTung.getPhuTungId();
 
-        if (phuTungId == null ||
-                phuTungId.isEmpty()) {
-
+        if (phuTungId == null || phuTungId.isEmpty()) {
             Toast.makeText(
                     context,
                     "Không xác định được phụ tùng",
                     Toast.LENGTH_SHORT
             ).show();
-
             return;
         }
 
-        firestore
-                .collection("spare_parts")
+        firestore.collection("spare_parts")
                 .document(phuTungId)
                 .delete()
-                .addOnSuccessListener(
-                        unused -> {
+                .addOnSuccessListener(unused -> {
+                    if (position >= 0 &&
+                            position < danhSachPhuTung.size()) {
 
-                            if (position >= 0 &&
-                                    position < danhSachPhuTung.size()) {
+                        danhSachPhuTung.remove(position);
+                        notifyItemRemoved(position);
 
-                                danhSachPhuTung.remove(
-                                        position
-                                );
+                        notifyItemRangeChanged(
+                                position,
+                                danhSachPhuTung.size() - position
+                        );
+                    }
 
-                                notifyItemRemoved(
-                                        position
-                                );
-
-                                notifyItemRangeChanged(
-                                        position,
-                                        danhSachPhuTung.size()
-                                                - position
-                                );
-                            }
-
-                            Toast.makeText(
-                                    context,
-                                    "Xóa phụ tùng thành công!",
-                                    Toast.LENGTH_SHORT
-                            ).show();
-                        }
-                )
-                .addOnFailureListener(
-                        e -> {
-
-                            Toast.makeText(
-                                    context,
-                                    "Xóa thất bại: "
-                                            + e.getMessage(),
-                                    Toast.LENGTH_LONG
-                            ).show();
-                        }
-                );
+                    Toast.makeText(
+                            context,
+                            "Xóa phụ tùng thành công!",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(
+                                context,
+                                "Xóa thất bại: " + e.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show());
     }
-
-    // =========================================================
-    // ITEM COUNT
-    // =========================================================
 
     @Override
     public int getItemCount() {
-
         return danhSachPhuTung.size();
     }
 
@@ -658,45 +493,29 @@ public class AdminPhuTungAdapter
         Button btnSuaPhuTung;
         Button btnXoaPhuTung;
 
-        public PhuTungViewHolder(
-                @NonNull View itemView) {
-
+        public PhuTungViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imgAdminPhuTung =
-                    itemView.findViewById(
-                            R.id.imgAdminPhuTung
-                    );
+                    itemView.findViewById(R.id.imgAdminPhuTung);
 
             txtAdminTenPhuTung =
-                    itemView.findViewById(
-                            R.id.txtAdminTenPhuTung
-                    );
+                    itemView.findViewById(R.id.txtAdminTenPhuTung);
 
             txtAdminGiaPhuTung =
-                    itemView.findViewById(
-                            R.id.txtAdminGiaPhuTung
-                    );
+                    itemView.findViewById(R.id.txtAdminGiaPhuTung);
 
             txtAdminSoLuongPhuTung =
-                    itemView.findViewById(
-                            R.id.txtAdminSoLuongPhuTung
-                    );
+                    itemView.findViewById(R.id.txtAdminSoLuongPhuTung);
 
             txtAdminTrangThaiPhuTung =
-                    itemView.findViewById(
-                            R.id.txtAdminTrangThaiPhuTung
-                    );
+                    itemView.findViewById(R.id.txtAdminTrangThaiPhuTung);
 
             btnSuaPhuTung =
-                    itemView.findViewById(
-                            R.id.btnSuaPhuTung
-                    );
+                    itemView.findViewById(R.id.btnSuaPhuTung);
 
             btnXoaPhuTung =
-                    itemView.findViewById(
-                            R.id.btnXoaPhuTung
-                    );
+                    itemView.findViewById(R.id.btnXoaPhuTung);
         }
     }
 }

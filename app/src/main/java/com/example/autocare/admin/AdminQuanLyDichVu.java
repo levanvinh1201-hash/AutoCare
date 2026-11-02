@@ -22,12 +22,13 @@ import java.util.HashMap;
 import java.util.Map;
 import android.text.Editable;
 import android.text.TextWatcher;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AdminQuanLyDichVu extends AppCompatActivity {
 
     private RecyclerView recyclerDichVuAdmin;
     private TextView txtSoLuongDichVuAdmin;
-    private Button btnThemDichVu;
+    private FloatingActionButton btnThemDichVu;
 
     private ArrayList<DocumentSnapshot> danhSachDichVu;
 

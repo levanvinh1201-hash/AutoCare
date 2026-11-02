@@ -95,7 +95,6 @@ public class DangNhap extends AppCompatActivity {
                                     btnDangNhap.setEnabled(true);
 
                                     if (!documentSnapshot.exists()) {
-
                                         Toast.makeText(
                                                 DangNhap.this,
                                                 "Không tìm thấy thông tin tài khoản",
