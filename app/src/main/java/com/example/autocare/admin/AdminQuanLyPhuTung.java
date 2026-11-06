@@ -65,8 +65,7 @@ public class AdminQuanLyPhuTung extends AppCompatActivity {
 
     // =========================================================
     // TẢI DANH SÁCH PHỤ TÙNG
-    // =========================================================
-
+    // ========================================================
     private void taiDanhSachPhuTung() {
 
         firestore.collection("spare_parts")
