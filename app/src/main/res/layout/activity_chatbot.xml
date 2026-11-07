@@ -3,22 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F4F7FB">
+    android:background="#F5F7FB">
 
+    <!-- HEADER -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="72dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:background="@color/white">
+        android:background="#FFFFFF"
+        android:elevation="3dp">
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:gravity="center"
-            android:src="@drawable/chatbot" />
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:src="@drawable/chatbot"
+            android:scaleType="centerCrop"
+            android:contentDescription="AutoCare Assistant" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -31,53 +34,87 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="AutoCare Assistant"
-                android:textColor="#63E4D6"
+                android:textColor="#1565C0"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hỗ trợ dịch vụ gara"
-                android:textColor="#63E4D6"
-                android:textSize="12sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:background="#4CAF50" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Trợ lý AI hỗ trợ ô tô"
+                    android:textColor="#78909C"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <TextView
             android:id="@+id/btnXoaLichSuChat"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:text="Xóa"
-            android:textColor="#63E4D6"
-            android:textSize="14sp" />
+            android:textColor="#E53935"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="#FFF1F0" />
+
     </LinearLayout>
 
+    <!-- LỜI CHÀO -->
     <TextView
         android:id="@+id/txtLoiChaoChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="14dp"
-        android:text="Xin chào! Mình có thể giúp bạn tra cứu dịch vụ, phụ tùng và lịch đặt."
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="12dp"
+        android:padding="15dp"
+        android:text="Xin chào! 👋&#10;Mình là AutoCare AI. Mình có thể giúp bạn giải đáp các câu hỏi về ô tô, động cơ, bảo dưỡng, sửa chữa và phụ tùng xe."
         android:textColor="#37474F"
         android:textSize="14sp"
-        android:background="#E3F2FD" />
+        android:lineSpacingExtra="3dp"
+        android:background="#E8F2FF" />
 
+    <!-- DANH SÁCH TIN NHẮN -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerChat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:padding="12dp" />
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:overScrollMode="never" />
 
+    <!-- THANH NHẬP TIN NHẮN -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="10dp"
-        android:background="#FFFFFF">
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp">
 
         <EditText
             android:id="@+id/edtTinNhanChat"
@@ -85,19 +122,31 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:minHeight="48dp"
+            android:maxHeight="120dp"
             android:maxLines="4"
-            android:padding="12dp"
-            android:hint="Nhập câu hỏi..."
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:hint="Hỏi AutoCare bất cứ điều gì..."
+            android:textColor="#263238"
+            android:textColorHint="#90A4AE"
+            android:textSize="14sp"
             android:inputType="textCapSentences|textMultiLine"
-            android:background="#F0F2F5" />
+            android:background="#F1F4F9" />
 
         <ImageButton
             android:id="@+id/btnGui"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="#FFFFFF"
-            android:layout_marginStart="8dp"
-        android:src="@drawable/ic_send_paperplane" />
+            android:layout_marginStart="9dp"
+            android:padding="12dp"
+            android:scaleType="centerInside"
+            android:background="#1976D2"
+            android:src="@drawable/ic_send_paperplane"
+            android:contentDescription="Gửi tin nhắn"
+            android:tint="#FFFFFF" />
+
     </LinearLayout>
 
 </LinearLayout>
