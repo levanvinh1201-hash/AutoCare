@@ -415,14 +415,16 @@ public class AdminLichAdapter
                             "Đã xác nhận",
                             "Đang sửa chữa",
                             "Hoàn thành",
-                            "Đã hủy"
+                            "Đã hủy",
+                            "khách không đến"
                     };
 
                     String[] giaTriTrangThai = {
                             "CONFIRMED",
                             "IN_PROGRESS",
                             "COMPLETED",
-                            "CANCELLED"
+                            "CANCELLED",
+                            "NO_SHOW"
                     };
 
                     AlertDialog.Builder builder =
@@ -527,102 +529,82 @@ public class AdminLichAdapter
                         }
                 );
     }
+
     private void hienThiTrangThai(
             TextView textView,
             String trangThai) {
 
         if (trangThai == null) {
-
             trangThai = "PENDING";
         }
 
-
-        switch (trangThai.toUpperCase()) {
+        switch (trangThai.trim().toUpperCase()) {
 
             case "CONFIRMED":
 
-                textView.setText(
-                        "ĐÃ XÁC NHẬN"
-                );
-
+                textView.setText("ĐÃ XÁC NHẬN");
                 textView.setTextColor(
                         Color.parseColor("#1565C0")
                 );
-
                 textView.setBackgroundColor(
                         Color.parseColor("#E3F2FD")
                 );
-
                 break;
-
 
             case "IN_PROGRESS":
 
-                textView.setText(
-                        "ĐANG SỬA CHỮA"
-                );
-
+                textView.setText("ĐANG SỬA CHỮA");
                 textView.setTextColor(
                         Color.parseColor("#7B1FA2")
                 );
-
                 textView.setBackgroundColor(
                         Color.parseColor("#F3E5F5")
                 );
-
                 break;
-
 
             case "COMPLETED":
 
-                textView.setText(
-                        "HOÀN THÀNH"
-                );
-
+                textView.setText("HOÀN THÀNH");
                 textView.setTextColor(
                         Color.parseColor("#2E7D32")
                 );
-
                 textView.setBackgroundColor(
                         Color.parseColor("#E8F5E9")
                 );
-
                 break;
-
 
             case "CANCELLED":
 
-                textView.setText(
-                        "ĐÃ HỦY"
-                );
-
+                textView.setText("ĐÃ HỦY");
                 textView.setTextColor(
                         Color.parseColor("#C62828")
                 );
-
                 textView.setBackgroundColor(
                         Color.parseColor("#FFEBEE")
                 );
-
                 break;
 
+            case "NO_SHOW":
+
+                textView.setText("KHÁCH KHÔNG ĐẾN");
+                textView.setTextColor(
+                        Color.parseColor("#B91C1C")
+                );
+                textView.setBackgroundColor(
+                        Color.parseColor("#FEE2E2")
+                );
+                break;
 
             case "PENDING":
-
             default:
 
-                textView.setText(
-                        "CHỜ XÁC NHẬN"
-                );
-
+                textView.setText("CHỜ XÁC NHẬN");
                 textView.setTextColor(
                         Color.parseColor("#F57C00")
                 );
-
                 textView.setBackgroundColor(
                         Color.parseColor("#FFF3E0")
                 );
-
                 break;
         }
     }

@@ -113,79 +113,43 @@ public class LichDatAdapter extends RecyclerView.Adapter<LichDatAdapter.LichDatV
 
         if ("PENDING".equals(trangThai)) {
 
-            holder.txtTrangThai.setText(
-                    "Chờ xác nhận"
-            );
-
-            holder.txtTrangThai.setTextColor(
-                    Color.rgb(245, 158, 11)
-            );
-
-            holder.txtTrangThai.setBackgroundColor(
-                    Color.rgb(255, 244, 214)
-            );
+            holder.txtTrangThai.setText("Chờ xác nhận");
+            holder.txtTrangThai.setTextColor(Color.rgb(245, 158, 11));
+            holder.txtTrangThai.setBackgroundColor(Color.rgb(255, 244, 214));
 
         } else if ("CONFIRMED".equals(trangThai)) {
 
-            holder.txtTrangThai.setText(
-                    "Đã xác nhận"
-            );
-
-            holder.txtTrangThai.setTextColor(
-                    Color.rgb(37, 99, 235)
-            );
-
-            holder.txtTrangThai.setBackgroundColor(
-                    Color.rgb(219, 234, 254)
-            );
+            holder.txtTrangThai.setText("Đã xác nhận");
+            holder.txtTrangThai.setTextColor(Color.rgb(37, 99, 235));
+            holder.txtTrangThai.setBackgroundColor(Color.rgb(219, 234, 254));
 
         } else if ("IN_PROGRESS".equals(trangThai)) {
 
-            holder.txtTrangThai.setText(
-                    "Đang sửa chữa"
-            );
-
-            holder.txtTrangThai.setTextColor(
-                    Color.rgb(124, 58, 237)
-            );
-
-            holder.txtTrangThai.setBackgroundColor(
-                    Color.rgb(237, 233, 254)
-            );
+            holder.txtTrangThai.setText("Đang sửa chữa");
+            holder.txtTrangThai.setTextColor(Color.rgb(124, 58, 237));
+            holder.txtTrangThai.setBackgroundColor(Color.rgb(237, 233, 254));
 
         } else if ("COMPLETED".equals(trangThai)) {
 
-            holder.txtTrangThai.setText(
-                    "Hoàn thành"
-            );
-
-            holder.txtTrangThai.setTextColor(
-                    Color.rgb(22, 163, 74)
-            );
-
-            holder.txtTrangThai.setBackgroundColor(
-                    Color.rgb(220, 252, 231)
-            );
+            holder.txtTrangThai.setText("Hoàn thành");
+            holder.txtTrangThai.setTextColor(Color.rgb(22, 163, 74));
+            holder.txtTrangThai.setBackgroundColor(Color.rgb(220, 252, 231));
 
         } else if ("CANCELLED".equals(trangThai)) {
 
-            holder.txtTrangThai.setText(
-                    "Đã hủy"
-            );
+            holder.txtTrangThai.setText("Đã hủy");
+            holder.txtTrangThai.setTextColor(Color.rgb(220, 38, 38));
+            holder.txtTrangThai.setBackgroundColor(Color.rgb(254, 226, 226));
 
-            holder.txtTrangThai.setTextColor(
-                    Color.rgb(220, 38, 38)
-            );
+        } else if ("NO_SHOW".equals(trangThai)) {
 
-            holder.txtTrangThai.setBackgroundColor(
-                    Color.rgb(254, 226, 226)
-            );
+            holder.txtTrangThai.setText("Khách không đến");
+            holder.txtTrangThai.setTextColor(Color.rgb(185, 28, 28));
+            holder.txtTrangThai.setBackgroundColor(Color.rgb(254, 226, 226));
 
         } else {
 
-            holder.txtTrangThai.setText(
-                    trangThai
-            );
+            holder.txtTrangThai.setText(trangThai);
         }
 
         // ================= NÚT HỦY LỊCH =================
