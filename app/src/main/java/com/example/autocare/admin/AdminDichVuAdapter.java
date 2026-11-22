@@ -40,6 +40,7 @@ public class AdminDichVuAdapter
 
     @NonNull
     @Override
+    //onCreateViewHolder tạo khung giao diện
     public DichVuViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent,
             int viewType) {

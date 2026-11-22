@@ -12,7 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestore;import android.util.Patterns;
+import android.widget.LinearLayout;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TaiKhoanActivity extends AppCompatActivity {
 
@@ -169,23 +172,16 @@ public class TaiKhoanActivity extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
 
         if (user == null) {
-
-            Toast.makeText(
-                    this,
-                    "Vui lòng đăng nhập",
-                    Toast.LENGTH_SHORT
-            ).show();
-
+            Toast.makeText(this, "Vui lòng đăng nhập",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
         String email = user.getEmail() != null
-                ? user.getEmail()
-                : "Chưa cập nhật";
+                ? user.getEmail() : "Chưa cập nhật";
 
         String sdt = soDienThoai.isEmpty()
-                ? "Chưa cập nhật"
-                : soDienThoai;
+                ? "Chưa cập nhật" : soDienThoai;
 
         new AlertDialog.Builder(this)
                 .setTitle("Thông tin cá nhân")
@@ -195,7 +191,145 @@ public class TaiKhoanActivity extends AppCompatActivity {
                                 + "\n\nSố điện thoại: " + sdt
                 )
                 .setPositiveButton("Đóng", null)
+                .setNeutralButton("Chỉnh sửa", (dialog, which) ->
+                        chinhSuaThongTinCaNhan()
+                )
                 .show();
+    }
+    private void chinhSuaThongTinCaNhan() {
+
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user == null) return;
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(50, 20, 50, 10);
+
+        EditText edtHoTen = new EditText(this);
+        edtHoTen.setHint("Nhập họ tên");
+        edtHoTen.setSingleLine(true);
+        edtHoTen.setText(hoTen);
+
+        EditText edtEmail = new EditText(this);
+        edtEmail.setHint("Nhập email");
+        edtEmail.setSingleLine(true);
+        edtEmail.setInputType(
+                InputType.TYPE_CLASS_TEXT
+                        | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        );
+
+        edtEmail.setText(user.getEmail());
+
+        layout.addView(edtHoTen);
+        layout.addView(edtEmail);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Chỉnh sửa thông tin")
+                .setView(layout)
+                .setNegativeButton("Hủy", null)
+                .setPositiveButton("Lưu", null)
+                .create();
+
+        dialog.setOnShowListener(unused -> {
+
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                    .setOnClickListener(v -> {
+
+                        String tenMoi = edtHoTen.getText()
+                                .toString().trim();
+
+                        String emailMoi = edtEmail.getText()
+                                .toString().trim();
+
+                        if (tenMoi.isEmpty()) {
+                            edtHoTen.setError("Vui lòng nhập họ tên");
+                            return;
+                        }
+
+                        if (!Patterns.EMAIL_ADDRESS
+                                .matcher(emailMoi).matches()) {
+                            edtEmail.setError("Email không hợp lệ");
+                            return;
+                        }
+
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                                .setEnabled(false);
+
+                        String emailCu = user.getEmail() != null
+                                ? user.getEmail() : "";
+
+                        Runnable capNhatFirestore = () -> {
+
+                            Map<String, Object> data = new HashMap<>();
+                            data.put("hoTen", tenMoi);
+                            data.put("email", emailMoi);
+
+                            db.collection("users")
+                                    .document(user.getUid())
+                                    .update(data)
+                                    .addOnSuccessListener(unusedResult -> {
+
+                                        hoTen = tenMoi;
+
+                                        tvTenTaiKhoan.setText(hoTen);
+                                        tvEmailTaiKhoan.setText(emailMoi);
+
+                                        Toast.makeText(
+                                                this,
+                                                "Cập nhật thông tin thành công!",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+
+                                        dialog.dismiss();
+                                    })
+                                    .addOnFailureListener(e -> {
+
+                                        dialog.getButton(
+                                                AlertDialog.BUTTON_POSITIVE
+                                        ).setEnabled(true);
+
+                                        Toast.makeText(
+                                                this,
+                                                "Lỗi lưu Firestore: "
+                                                        + e.getMessage(),
+                                                Toast.LENGTH_LONG
+                                        ).show();
+                                    });
+                        };
+
+                        // Nếu email không thay đổi thì chỉ cập nhật Firestore
+                        if (emailMoi.equals(emailCu)) {
+                            capNhatFirestore.run();
+                        } else {
+
+                            // Cập nhật email Firebase Authentication
+                            user.updateEmail(emailMoi)
+                                    .addOnSuccessListener(unusedResult -> {
+
+                                        // Sau khi cập nhật Auth thành công,
+                                        // tiếp tục cập nhật Firestore
+                                        capNhatFirestore.run();
+                                    })
+                                    .addOnFailureListener(e -> {
+
+                                        dialog.getButton(
+                                                AlertDialog.BUTTON_POSITIVE
+                                        ).setEnabled(true);
+
+                                        Toast.makeText(
+                                                this,
+                                                "Không thể đổi email: "
+                                                        + e.getMessage()
+                                                        + "\nCó thể cần đăng nhập lại.",
+                                                Toast.LENGTH_LONG
+                                        ).show();
+                                    });
+                        }
+                    });
+        });
+
+        dialog.show();
     }
 
     // =====================================================

@@ -40,6 +40,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ChatbotActivity extends AppCompatActivity {
+    // loc thong bao tren cua so logcat bằng từ khoá "AutoCareAI"
     private static final String TAG = "AutoCareAI";
     private static final String WORKER_URL =
             "https://autocare-ai.lvvinh-dhmt17a1hn.workers.dev/";
@@ -60,6 +61,7 @@ public class ChatbotActivity extends AppCompatActivity {
     private boolean dangXoa = false;
 
     @Override
+    // khởi tạo giao diện kết nối firebase và kiểm tra baor mật
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatbot);
@@ -70,13 +72,14 @@ public class ChatbotActivity extends AppCompatActivity {
             finish();
             return;
         }
+        // quy trinh khoi tao tuan tu cho toan bo man hinh
         uid = auth.getCurrentUser().getUid();
         anhXaView();
         khoiTaoDanhSach();
         ganSuKien();
         xacDinhVaiTroVaTaiChat();
     }
-
+// cau nối giữa file giao diên xml và code xử lý logic trong java
     private void anhXaView() {
         edtTinNhan = findViewById(R.id.edtTinNhanChat);
         btnGui = findViewById(R.id.btnGui);

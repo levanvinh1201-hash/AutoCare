@@ -72,9 +72,10 @@ public class LichSuDatLich extends AppCompatActivity {
 
             return;
         }
-
+//LẤY UID của nguowif dùng đag đăng nhập hiên ta trên firebase trong app
         String maNguoiDung =
                 firebaseAuth.getCurrentUser().getUid();
+
 
         // Lấy các lịch của người dùng hiện tại
         firestore.collection("appointments")
