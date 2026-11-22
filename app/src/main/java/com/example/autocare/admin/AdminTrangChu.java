@@ -50,10 +50,11 @@ public class AdminTrangChu extends AppCompatActivity {
         // =============================
 
         firebaseAuth = FirebaseAuth.getInstance();
-
+// lấy ra đối tượng instance quản lý xác thực người dùng
+        //firebaseauth  để thực hiện các chức năng như đăg nhập đăng kí
         firestore =
                 FirebaseFirestore.getInstance();
-
+// lấy ra 1 đối tượng kết nối với cơ sở dữ liệu từ đám mây
 
         // =============================
         // ÁNH XẠ BUTTON
